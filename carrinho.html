@@ -62,9 +62,7 @@
           A TUA ENCOMENDA
         </p>
 
-        <h1>
-          O teu carrinho
-        </h1>
+        <h1>O teu carrinho</h1>
 
         <p>
           Confirma os teus kits antes de continuares.
@@ -119,35 +117,29 @@
 
 
         <div class="cart-money-row">
-
           <span>Subtotal</span>
 
           <strong id="cartSubtotal">
             0,00 €
           </strong>
-
         </div>
 
 
         <div class="cart-money-row">
-
           <span>Envio</span>
 
           <strong>
             Grátis
           </strong>
-
         </div>
 
 
         <div class="cart-total-row">
-
           <span>Total</span>
 
           <strong id="cartTotal">
             0,00 €
           </strong>
-
         </div>
 
 
@@ -160,18 +152,14 @@
           class="btn primary checkout-button"
           id="checkoutButton"
           type="button">
-
           Continuar →
-
         </button>
 
       </div>
 
 
 
-      <!-- =====================================
-           DADOS DE ENTREGA
-           ===================================== -->
+      <!-- DADOS DE ENTREGA -->
 
       <div
         id="deliveryArea"
@@ -226,7 +214,6 @@
             "
           >
 
-
             <div class="checkout-field">
 
               <label for="customerName">
@@ -235,7 +222,6 @@
 
               <input
                 id="customerName"
-                name="name"
                 type="text"
                 autocomplete="name"
                 required
@@ -252,7 +238,6 @@
 
               <input
                 id="customerEmail"
-                name="email"
                 type="email"
                 autocomplete="email"
                 required
@@ -269,7 +254,6 @@
 
               <input
                 id="customerPhone"
-                name="phone"
                 type="tel"
                 autocomplete="tel"
                 required
@@ -286,7 +270,6 @@
 
               <input
                 id="customerAddress"
-                name="address"
                 type="text"
                 autocomplete="street-address"
                 placeholder="Rua, número, andar..."
@@ -296,13 +279,7 @@
             </div>
 
 
-            <div
-              style="
-                display:grid;
-                grid-template-columns:1fr 1fr;
-                gap:14px;
-              "
-            >
+            <div class="checkout-address-grid">
 
               <div class="checkout-field">
 
@@ -312,7 +289,6 @@
 
                 <input
                   id="customerPostalCode"
-                  name="postalCode"
                   type="text"
                   autocomplete="postal-code"
                   placeholder="0000-000"
@@ -331,7 +307,6 @@
 
                 <input
                   id="customerCity"
-                  name="city"
                   type="text"
                   autocomplete="address-level2"
                   required
@@ -346,19 +321,13 @@
 
               <label for="customerNif">
                 NIF
-                <span
-                  style="
-                    font-weight:600;
-                    color:var(--muted);
-                  "
-                >
+                <span class="optional-field">
                   (opcional)
                 </span>
               </label>
 
               <input
                 id="customerNif"
-                name="nif"
                 type="text"
                 inputmode="numeric"
                 maxlength="9"
@@ -371,28 +340,14 @@
             <button
               class="btn primary checkout-button"
               id="paymentButton"
-              type="submit"
-              style="
-                width:100%;
-                border:0;
-                margin-top:8px;
-              "
-            >
-
+              type="submit">
               Ir para pagamento →
-
             </button>
 
 
             <p
               id="checkoutMessage"
-              style="
-                display:none;
-                margin:14px 0 0;
-                font-size:12px;
-                line-height:1.5;
-              "
-            >
+              class="checkout-message">
             </p>
 
           </form>
@@ -403,9 +358,7 @@
 
 
 
-      <!-- =====================================
-           EASYPAY
-           ===================================== -->
+      <!-- PAGAMENTO EASYPAY -->
 
       <div
         id="checkoutArea"
@@ -437,6 +390,13 @@
           >
             Finalizar encomenda
           </h2>
+
+
+          <div
+            class="order-reference"
+            id="orderReference"
+            style="display:none;">
+          </div>
 
 
           <div id="easypay-checkout"></div>
@@ -471,6 +431,8 @@
 
 
 
+  <!-- SDK EASYPAY -->
+
   <script
     src="https://cdn.easypay.pt/checkout/2.9.1/">
   </script>
@@ -479,15 +441,16 @@
   <script>
 
     const PRODUCT_PRICES = {
-
       "Kit Explorador": 54.90,
-
       "Kit Dinossauro": 54.90
-
     };
 
 
-    const NETLIFY_CHECKOUT_URL =
+    const CREATE_ORDER_URL =
+      "https://cute-profiterole-833561.netlify.app/.netlify/functions/create-order";
+
+
+    const CREATE_CHECKOUT_URL =
       "https://cute-profiterole-833561.netlify.app/.netlify/functions/create-checkout";
 
 
@@ -497,7 +460,7 @@
 
     function formatPrice(value) {
 
-      return value.toLocaleString(
+      return Number(value).toLocaleString(
         "pt-PT",
         {
           style: "currency",
@@ -565,6 +528,32 @@
 
 
       return "images/logo.png";
+
+    }
+
+
+
+    function getProductId(product) {
+
+      if (
+        product === "Kit Explorador"
+      ) {
+
+        return "kit-explorador";
+
+      }
+
+
+      if (
+        product === "Kit Dinossauro"
+      ) {
+
+        return "kit-dinossauro";
+
+      }
+
+
+      return null;
 
     }
 
@@ -674,7 +663,8 @@
         );
 
 
-      cartItems.innerHTML = "";
+      cartItems.innerHTML =
+        "";
 
 
       if (
@@ -897,7 +887,9 @@
       }
 
 
-      saveCart(cart);
+      saveCart(
+        cart
+      );
 
     }
 
@@ -915,7 +907,9 @@
       );
 
 
-      saveCart(cart);
+      saveCart(
+        cart
+      );
 
     }
 
@@ -949,6 +943,197 @@
 
 
 
+    function buildOrderItems(cart) {
+
+      return cart
+        .map(
+          function(item) {
+
+            const id =
+              getProductId(
+                item.product
+              );
+
+
+            if (!id) {
+
+              return null;
+
+            }
+
+
+            return {
+
+              id: id,
+
+              quantity:
+                Number(
+                  item.quantity || 1
+                ),
+
+              childName:
+                String(
+                  item.childName || ""
+                ).trim()
+
+            };
+
+          }
+        )
+        .filter(Boolean);
+
+    }
+
+
+
+    async function createOrder(cart) {
+
+      const items =
+        buildOrderItems(
+          cart
+        );
+
+
+      const response =
+        await fetch(
+          CREATE_ORDER_URL,
+          {
+
+            method: "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/json"
+
+            },
+
+            body:
+              JSON.stringify({
+                items: items
+              })
+
+          }
+        );
+
+
+      const result =
+        await response.json();
+
+
+      if (
+        !response.ok ||
+        !result.success ||
+        !result.order
+      ) {
+
+        throw new Error(
+          "Não foi possível validar a encomenda."
+        );
+
+      }
+
+
+      return result.order;
+
+    }
+
+
+
+    async function createEasypayCheckout(
+      order
+    ) {
+
+      /*
+        A função create-checkout atual
+        está preparada para o Kit Explorador.
+
+        Nesta fase usamos a quantidade
+        validada pelo servidor.
+      */
+
+      const explorer =
+        order.items.find(
+          function(item) {
+
+            return (
+              item.id ===
+              "kit-explorador"
+            );
+
+          }
+        );
+
+
+      if (!explorer) {
+
+        throw new Error(
+          "Neste teste o checkout está preparado para o Kit Explorador."
+        );
+
+      }
+
+
+      if (
+        order.items.length !== 1
+      ) {
+
+        throw new Error(
+          "Neste teste adiciona apenas o Kit Explorador ao carrinho."
+        );
+
+      }
+
+
+      const response =
+        await fetch(
+          CREATE_CHECKOUT_URL,
+          {
+
+            method: "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/json"
+
+            },
+
+            body:
+              JSON.stringify({
+
+                quantity:
+                  explorer.quantity
+
+              })
+
+          }
+        );
+
+
+      const result =
+        await response.json();
+
+
+      if (
+        !response.ok ||
+        !result.success ||
+        !result.manifest
+      ) {
+
+        throw new Error(
+          "Não foi possível criar o pagamento."
+        );
+
+      }
+
+
+      return result.manifest;
+
+    }
+
+
+
     async function startCheckout(event) {
 
       event.preventDefault();
@@ -975,6 +1160,15 @@
         getCart();
 
 
+      if (
+        cart.length === 0
+      ) {
+
+        return;
+
+      }
+
+
       const button =
         document.getElementById(
           "paymentButton"
@@ -993,59 +1187,10 @@
         );
 
 
-      if (
-        cart.length === 0
-      ) {
-
-        return;
-
-      }
-
-
-
-      const explorerQuantity =
-        cart.reduce(
-          function(total, item) {
-
-            if (
-              item.product ===
-              "Kit Explorador"
-            ) {
-
-              return (
-                total +
-                Number(
-                  item.quantity || 1
-                )
-              );
-
-            }
-
-
-            return total;
-
-          },
-          0
+      const orderReference =
+        document.getElementById(
+          "orderReference"
         );
-
-
-
-      if (
-        explorerQuantity === 0
-      ) {
-
-        message.style.display =
-          "block";
-
-
-        message.textContent =
-          "Neste primeiro teste estamos a utilizar o Kit Explorador.";
-
-
-        return;
-
-      }
-
 
 
       const customer = {
@@ -1110,19 +1255,20 @@
 
 
       /*
-        Guardamos temporariamente os
-        dados no browser para os próximos
-        passos do desenvolvimento.
+        Por enquanto os dados de entrega
+        continuam apenas nesta sessão
+        do navegador.
 
-        Mais tarde a encomenda será
-        registada no servidor.
+        Não são enviados para a função
+        create-order nesta fase.
       */
 
       sessionStorage.setItem(
         "kitrinetaCustomer",
-        JSON.stringify(customer)
+        JSON.stringify(
+          customer
+        )
       );
-
 
 
       button.disabled =
@@ -1130,67 +1276,63 @@
 
 
       button.textContent =
-        "A preparar pagamento...";
+        "A validar encomenda...";
 
 
       message.style.display =
-        "none";
+        "block";
+
+
+      message.textContent =
+        "A validar produtos e total...";
 
 
       try {
 
-        const response =
-          await fetch(
-            NETLIFY_CHECKOUT_URL,
-            {
+        /*
+          1 — O servidor valida
+          produtos, quantidades e preços.
+        */
 
-              method: "POST",
-
-              headers: {
-
-                "Content-Type":
-                  "application/json"
-
-              },
-
-
-              body:
-                JSON.stringify({
-
-                  quantity:
-                    explorerQuantity
-
-                })
-
-            }
+        const order =
+          await createOrder(
+            cart
           );
-
-
-
-        const result =
-          await response.json();
-
 
 
         console.log(
-          "Resposta Easypay:",
-          result
+          "Encomenda validada:",
+          order
         );
 
 
+        sessionStorage.setItem(
+          "kitrinetaOrder",
+          JSON.stringify(
+            order
+          )
+        );
 
-        if (
-          !response.ok ||
-          !result.success ||
-          !result.manifest
-        ) {
 
-          throw new Error(
-            "Não foi possível criar a sessão Easypay."
+        message.textContent =
+          "Encomenda validada. A preparar pagamento...";
+
+
+        /*
+          2 — Só depois criamos
+          o checkout Easypay.
+        */
+
+        const manifest =
+          await createEasypayCheckout(
+            order
           );
 
-        }
 
+        console.log(
+          "Manifest Easypay:",
+          manifest
+        );
 
 
         if (
@@ -1204,32 +1346,42 @@
         }
 
 
-
         checkoutArea.style.display =
           "block";
 
 
+        orderReference.style.display =
+          "block";
+
+
+        orderReference.innerHTML =
+          "Encomenda <strong>" +
+          escapeHTML(order.id) +
+          "</strong> · " +
+          formatPrice(order.total) +
+          " · Portes grátis";
+
+
+        message.style.display =
+          "none";
+
 
         checkoutInstance =
           easypayCheckout.startCheckout(
-            result.manifest,
+            manifest,
             {
 
               id:
                 "easypay-checkout",
 
-
               display:
                 "inline",
-
 
               testing:
                 true,
 
-
               language:
                 "pt_PT",
-
 
               showLoading:
                 true,
@@ -1295,7 +1447,6 @@
           );
 
 
-
         setTimeout(
           function() {
 
@@ -1307,8 +1458,6 @@
           },
           250
         );
-
-
 
       }
 
@@ -1325,10 +1474,13 @@
 
 
         message.textContent =
-          "❌ Não foi possível abrir o checkout. Vamos verificar juntos.";
+          "❌ " +
+          (
+            error.message ||
+            "Não foi possível continuar."
+          );
 
       }
-
 
 
       button.disabled =
@@ -1367,6 +1519,7 @@
   </script>
 
 
+
   <style>
 
     .checkout-field {
@@ -1400,17 +1553,57 @@
 
     .checkout-field input:focus {
       border-color:var(--blue);
+
       box-shadow:
         0 0 0 3px
         rgba(89,183,200,.12);
     }
 
 
+    .checkout-address-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+
+    .optional-field {
+      font-weight:600;
+      color:var(--muted);
+    }
+
+
+    #paymentButton {
+      width:100%;
+      border:0;
+      margin-top:8px;
+    }
+
+
+    .checkout-message {
+      display:none;
+      margin:14px 0 0;
+      font-size:12px;
+      line-height:1.5;
+      color:var(--muted);
+    }
+
+
+    .order-reference {
+      margin-bottom:18px;
+      padding:13px 16px;
+      background:var(--blue2);
+      border-radius:12px;
+      color:var(--olive);
+      font-size:12px;
+    }
+
+
     @media(max-width:600px) {
 
-      #deliveryForm > div[style*="grid-template-columns"] {
-        grid-template-columns:1fr !important;
-        gap:0 !important;
+      .checkout-address-grid {
+        grid-template-columns:1fr;
+        gap:0;
       }
 
     }
