@@ -25,7 +25,7 @@
 <body>
 
   <div class="topbar">
-    <span>🚚 Envios para todo o país</span>
+    <span>🚚 Portes grátis</span>
     <span>♡ Tempo para ser criança</span>
     <span>🌿 Aprender a brincar</span>
   </div>
@@ -134,7 +134,7 @@
           <span>Envio</span>
 
           <strong>
-            A calcular
+            Grátis
           </strong>
 
         </div>
@@ -152,8 +152,7 @@
 
 
         <p class="cart-shipping-note">
-          Os custos de envio serão calculados
-          antes do pagamento.
+          Portes gratuitos para Portugal Continental.
         </p>
 
 
@@ -162,34 +161,257 @@
           id="checkoutButton"
           type="button">
 
-          Finalizar compra →
+          Continuar →
 
         </button>
-
-
-        <p
-          id="checkoutMessage"
-          style="
-            display:none;
-            margin-top:14px;
-            font-size:12px;
-            line-height:1.5;
-          ">
-        </p>
 
       </div>
 
 
-      <!--
-        A Easypay vai colocar aqui
-        o formulário de pagamento.
-      -->
+
+      <!-- =====================================
+           DADOS DE ENTREGA
+           ===================================== -->
+
+      <div
+        id="deliveryArea"
+        style="
+          display:none;
+          margin-top:45px;
+        "
+      >
+
+        <div
+          style="
+            max-width:700px;
+            margin:0 auto;
+          "
+        >
+
+          <p class="eyebrow">
+            ENTREGA
+          </p>
+
+          <h2
+            style="
+              font-family:'KidspaceWeb','Kidspace',cursive;
+              font-weight:normal;
+              font-size:42px;
+              color:var(--olive);
+              margin:5px 0 8px;
+            "
+          >
+            Para onde vai a aventura?
+          </h2>
+
+          <p
+            style="
+              color:var(--muted);
+              font-size:13px;
+              margin-bottom:25px;
+            "
+          >
+            Preenche os dados para receberes
+            a tua encomenda.
+          </p>
+
+
+          <form
+            id="deliveryForm"
+            style="
+              background:var(--cream);
+              border:1px solid #f0e9df;
+              border-radius:22px;
+              padding:26px;
+            "
+          >
+
+
+            <div class="checkout-field">
+
+              <label for="customerName">
+                Nome completo *
+              </label>
+
+              <input
+                id="customerName"
+                name="name"
+                type="text"
+                autocomplete="name"
+                required
+              >
+
+            </div>
+
+
+            <div class="checkout-field">
+
+              <label for="customerEmail">
+                E-mail *
+              </label>
+
+              <input
+                id="customerEmail"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+              >
+
+            </div>
+
+
+            <div class="checkout-field">
+
+              <label for="customerPhone">
+                Telemóvel *
+              </label>
+
+              <input
+                id="customerPhone"
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+                required
+              >
+
+            </div>
+
+
+            <div class="checkout-field">
+
+              <label for="customerAddress">
+                Morada *
+              </label>
+
+              <input
+                id="customerAddress"
+                name="address"
+                type="text"
+                autocomplete="street-address"
+                placeholder="Rua, número, andar..."
+                required
+              >
+
+            </div>
+
+
+            <div
+              style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+              "
+            >
+
+              <div class="checkout-field">
+
+                <label for="customerPostalCode">
+                  Código Postal *
+                </label>
+
+                <input
+                  id="customerPostalCode"
+                  name="postalCode"
+                  type="text"
+                  autocomplete="postal-code"
+                  placeholder="0000-000"
+                  pattern="[0-9]{4}-[0-9]{3}"
+                  required
+                >
+
+              </div>
+
+
+              <div class="checkout-field">
+
+                <label for="customerCity">
+                  Localidade *
+                </label>
+
+                <input
+                  id="customerCity"
+                  name="city"
+                  type="text"
+                  autocomplete="address-level2"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+
+            <div class="checkout-field">
+
+              <label for="customerNif">
+                NIF
+                <span
+                  style="
+                    font-weight:600;
+                    color:var(--muted);
+                  "
+                >
+                  (opcional)
+                </span>
+              </label>
+
+              <input
+                id="customerNif"
+                name="nif"
+                type="text"
+                inputmode="numeric"
+                maxlength="9"
+                placeholder="123456789"
+              >
+
+            </div>
+
+
+            <button
+              class="btn primary checkout-button"
+              id="paymentButton"
+              type="submit"
+              style="
+                width:100%;
+                border:0;
+                margin-top:8px;
+              "
+            >
+
+              Ir para pagamento →
+
+            </button>
+
+
+            <p
+              id="checkoutMessage"
+              style="
+                display:none;
+                margin:14px 0 0;
+                font-size:12px;
+                line-height:1.5;
+              "
+            >
+            </p>
+
+          </form>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =====================================
+           EASYPAY
+           ===================================== -->
 
       <div
         id="checkoutArea"
         style="
           display:none;
-          margin-top:35px;
+          margin-top:45px;
         "
       >
 
@@ -208,7 +430,7 @@
             style="
               font-family:'KidspaceWeb','Kidspace',cursive;
               font-weight:normal;
-              font-size:38px;
+              font-size:42px;
               color:var(--olive);
               margin:5px 0 18px;
             "
@@ -248,7 +470,6 @@
   </footer>
 
 
-  <!-- SDK OFICIAL EASYPAY -->
 
   <script
     src="https://cdn.easypay.pt/checkout/2.9.1/">
@@ -326,8 +547,7 @@
     function getProductImage(product) {
 
       if (
-        product ===
-        "Kit Explorador"
+        product === "Kit Explorador"
       ) {
 
         return "images/kitexplorador.png";
@@ -336,8 +556,7 @@
 
 
       if (
-        product ===
-        "Kit Dinossauro"
+        product === "Kit Dinossauro"
       ) {
 
         return "images/kitdinossauro.png";
@@ -455,8 +674,7 @@
         );
 
 
-      cartItems.innerHTML =
-        "";
+      cartItems.innerHTML = "";
 
 
       if (
@@ -514,15 +732,12 @@
 
             ? `
               <p class="cart-child">
-
                 Para:
-
                 <strong>
                   ${escapeHTML(
                     item.childName
                   )}
                 </strong>
-
               </p>
             `
 
@@ -531,9 +746,7 @@
 
           product.innerHTML = `
 
-            <div
-              class="cart-product-image"
-            >
+            <div class="cart-product-image">
 
               <img
                 src="${getProductImage(
@@ -547,14 +760,11 @@
             </div>
 
 
-            <div
-              class="cart-product-info"
-            >
+            <div class="cart-product-info">
 
               <p class="tag">
                 KIT EDUCATIVO
               </p>
-
 
               <h2>
                 ${escapeHTML(
@@ -562,46 +772,31 @@
                 )}
               </h2>
 
-
               ${childText}
 
-
               <p class="cart-price">
-
                 ${formatPrice(
                   price
                 )} cada
-
               </p>
 
-
-              <p
-                class="cart-line-total"
-              >
-
+              <p class="cart-line-total">
                 ${formatPrice(
                   itemTotal
                 )}
-
               </p>
 
             </div>
 
 
-            <div
-              class="cart-product-actions"
-            >
+            <div class="cart-product-actions">
 
-              <span
-                class="cart-quantity-label"
-              >
+              <span class="cart-quantity-label">
                 Quantidade
               </span>
 
 
-              <div
-                class="quantity-selector"
-              >
+              <div class="quantity-selector">
 
                 <button
                   type="button"
@@ -611,9 +806,7 @@
                       -1
                     )
                   "
-                  aria-label="
-                    Diminuir quantidade
-                  "
+                  aria-label="Diminuir quantidade"
                 >
                   −
                 </button>
@@ -632,9 +825,7 @@
                       1
                     )
                   "
-                  aria-label="
-                    Aumentar quantidade
-                  "
+                  aria-label="Aumentar quantidade"
                 >
                   +
                 </button>
@@ -706,9 +897,7 @@
       }
 
 
-      saveCart(
-        cart
-      );
+      saveCart(cart);
 
     }
 
@@ -726,15 +915,61 @@
       );
 
 
-      saveCart(
-        cart
+      saveCart(cart);
+
+    }
+
+
+
+    function showDeliveryForm() {
+
+      const deliveryArea =
+        document.getElementById(
+          "deliveryArea"
+        );
+
+
+      deliveryArea.style.display =
+        "block";
+
+
+      setTimeout(
+        function() {
+
+          deliveryArea.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+        },
+        100
       );
 
     }
 
 
 
-    async function startCheckout() {
+    async function startCheckout(event) {
+
+      event.preventDefault();
+
+
+      const form =
+        document.getElementById(
+          "deliveryForm"
+        );
+
+
+      if (
+        !form.checkValidity()
+      ) {
+
+        form.reportValidity();
+
+        return;
+
+      }
+
 
       const cart =
         getCart();
@@ -742,7 +977,7 @@
 
       const button =
         document.getElementById(
-          "checkoutButton"
+          "paymentButton"
         );
 
 
@@ -767,12 +1002,6 @@
       }
 
 
-
-      /*
-        NESTE PRIMEIRO TESTE
-        ESTAMOS A ENVIAR APENAS
-        O KIT EXPLORADOR.
-      */
 
       const explorerQuantity =
         cart.reduce(
@@ -810,12 +1039,89 @@
 
 
         message.textContent =
-          "Neste primeiro teste vamos utilizar o Kit Explorador.";
+          "Neste primeiro teste estamos a utilizar o Kit Explorador.";
 
 
         return;
 
       }
+
+
+
+      const customer = {
+
+        name:
+          document
+            .getElementById(
+              "customerName"
+            )
+            .value
+            .trim(),
+
+        email:
+          document
+            .getElementById(
+              "customerEmail"
+            )
+            .value
+            .trim(),
+
+        phone:
+          document
+            .getElementById(
+              "customerPhone"
+            )
+            .value
+            .trim(),
+
+        address:
+          document
+            .getElementById(
+              "customerAddress"
+            )
+            .value
+            .trim(),
+
+        postalCode:
+          document
+            .getElementById(
+              "customerPostalCode"
+            )
+            .value
+            .trim(),
+
+        city:
+          document
+            .getElementById(
+              "customerCity"
+            )
+            .value
+            .trim(),
+
+        nif:
+          document
+            .getElementById(
+              "customerNif"
+            )
+            .value
+            .trim()
+
+      };
+
+
+      /*
+        Guardamos temporariamente os
+        dados no browser para os próximos
+        passos do desenvolvimento.
+
+        Mais tarde a encomenda será
+        registada no servidor.
+      */
+
+      sessionStorage.setItem(
+        "kitrinetaCustomer",
+        JSON.stringify(customer)
+      );
 
 
 
@@ -838,9 +1144,7 @@
             NETLIFY_CHECKOUT_URL,
             {
 
-              method:
-                "POST",
-
+              method: "POST",
 
               headers: {
 
@@ -889,11 +1193,6 @@
 
 
 
-        /*
-          Se já existir um checkout
-          anterior, removemos primeiro.
-        */
-
         if (
           checkoutInstance &&
           typeof checkoutInstance.unmount
@@ -910,11 +1209,6 @@
           "block";
 
 
-
-        /*
-          ABRIR CHECKOUT EASYPAY
-          EM AMBIENTE DE TESTE
-        */
 
         checkoutInstance =
           easypayCheckout.startCheckout(
@@ -1006,11 +1300,8 @@
           function() {
 
             checkoutArea.scrollIntoView({
-              behavior:
-                "smooth",
-
-              block:
-                "start"
+              behavior: "smooth",
+              block: "start"
             });
 
           },
@@ -1045,7 +1336,7 @@
 
 
       button.textContent =
-        "Finalizar compra →";
+        "Ir para pagamento →";
 
     }
 
@@ -1057,6 +1348,16 @@
       )
       .addEventListener(
         "click",
+        showDeliveryForm
+      );
+
+
+    document
+      .getElementById(
+        "deliveryForm"
+      )
+      .addEventListener(
+        "submit",
         startCheckout
       );
 
@@ -1064,6 +1365,57 @@
     renderCart();
 
   </script>
+
+
+  <style>
+
+    .checkout-field {
+      margin-bottom:16px;
+    }
+
+
+    .checkout-field label {
+      display:block;
+      margin-bottom:7px;
+      color:var(--olive);
+      font-size:12px;
+      font-weight:900;
+    }
+
+
+    .checkout-field input {
+      width:100%;
+      box-sizing:border-box;
+      height:48px;
+      padding:0 14px;
+      border:1.5px solid #ddd8cf;
+      border-radius:10px;
+      background:#fff;
+      color:var(--ink);
+      font-family:Nunito,Arial,sans-serif;
+      font-size:14px;
+      outline:none;
+    }
+
+
+    .checkout-field input:focus {
+      border-color:var(--blue);
+      box-shadow:
+        0 0 0 3px
+        rgba(89,183,200,.12);
+    }
+
+
+    @media(max-width:600px) {
+
+      #deliveryForm > div[style*="grid-template-columns"] {
+        grid-template-columns:1fr !important;
+        gap:0 !important;
+      }
+
+    }
+
+  </style>
 
 </body>
 </html>
