@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Carrinho | Kitrineta</title>
+
+  <meta
+    name="description"
+    content="Carrinho de compras Kitrineta."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+  <!-- BARRA SUPERIOR -->
+
+  <div class="topbar">
+    <span>🚚 Envios para todo o país</span>
+    <span>♡ Tempo para ser criança</span>
+    <span>🌿 Aprender a brincar</span>
+  </div>
+
+
+  <!-- MENU -->
+
+  <header>
+
+    <a class="logo" href="index.html">
+      <img src="images/logo.png" alt="Kitrineta">
+    </a>
+
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="kits.html">Kits</a>
+      <a href="index.html#descobrir">Descobrir</a>
+      <a href="index.html#festas">Festas & Eventos</a>
+      <a href="index.html#sobre">Sobre nós</a>
+    </nav>
+
+    <a class="cart" href="carrinho.html">
+      🛒 <strong id="cartCount">0</strong>
+    </a>
+
+  </header>
+
+
+  <!-- CARRINHO -->
+
+  <main>
+
+    <section class="cart-page">
+
+      <div class="cart-heading">
+
+        <p class="eyebrow">
+          A TUA ENCOMENDA
+        </p>
+
+        <h1>
+          O teu carrinho
+        </h1>
+
+        <p>
+          Confirma os teus kits antes de continuares.
+        </p>
+
+      </div>
+
+
+      <!-- AQUI APARECEM OS PRODUTOS -->
+
+      <div
+        class="cart-items"
+        id="cartItems"
+      ></div>
+
+
+      <!-- CARRINHO VAZIO -->
+
+      <div
+        class="empty-cart"
+        id="emptyCart"
+      >
+
+        <div class="empty-cart-icon">
+          🛒
+        </div>
+
+        <h2>
+          O teu carrinho está vazio.
+        </h2>
+
+        <p>
+          Há muitas aventuras à espera de pequenos exploradores.
+        </p>
+
+        <a
+          class="btn primary"
+          href="kits.html"
+        >
+          Descobrir os Kits →
+        </a>
+
+      </div>
+
+
+      <!-- RESUMO -->
+
+      <div
+        class="cart-summary"
+        id="cartSummary"
+      >
+
+        <div>
+
+          <span>
+            Produtos
+          </span>
+
+          <strong id="cartTotalQuantity">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="cart-summary-note">
+
+          <p>
+            O valor total será apresentado quando
+            o preço dos kits estiver definido.
+          </p>
+
+        </div>
+
+
+        <button
+          class="btn primary checkout-button"
+          type="button"
+          disabled
+        >
+          Finalizar compra
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- RODAPÉ -->
+
+  <footer>
+
+    <img
+      src="images/logo.png"
+      alt="Kitrineta"
+    >
+
+    <p>
+      Descobrir ser criança.
+    </p>
+
+    <small>
+      © 2026 Kitrineta · Política de Privacidade · Termos e Condições
+    </small>
+
+  </footer>
+
+
+
+  <script>
+
+    function getCart() {
+      return JSON.parse(
+        localStorage.getItem("kitrinetaCart")
+      ) || [];
+    }
+
+
+    function saveCart(cart) {
+
+      localStorage.setItem(
+        "kitrinetaCart",
+        JSON.stringify(cart)
+      );
+
+      renderCart();
+    }
+
+
+    function getProductImage(product) {
+
+      if (product === "Kit Explorador") {
+        return "images/kitexplorador.png";
+      }
+
+      if (product === "Kit Dinossauro") {
+        return "images/kitdinossauro.png";
+      }
+
+      return "images/logo.png";
+    }
+
+
+    function renderCart() {
+
+      const cart = getCart();
+
+      const cartItems =
+        document.getElementById("cartItems");
+
+      const emptyCart =
+        document.getElementById("emptyCart");
+
+      const cartSummary =
+        document.getElementById("cartSummary");
+
+      const totalQuantity =
+        cart.reduce(function(total, item) {
+          return total + item.quantity;
+        }, 0);
+
+
+      document.getElementById(
+        "cartCount"
+      ).textContent = totalQuantity;
+
+
+      document.getElementById(
+        "cartTotalQuantity"
+      ).textContent = totalQuantity;
+
+
+      cartItems.innerHTML = "";
+
+
+      if (cart.length === 0) {
+
+        emptyCart.style.display = "block";
+        cartSummary.style.display = "none";
+
+        return;
+      }
+
+
+      emptyCart.style.display = "none";
+      cartSummary.style.display = "block";
+
+
+      cart.forEach(function(item, index) {
+
+        const product =
+          document.createElement("article");
+
+        product.className = "cart-product";
+
+
+        const childText =
+          item.childName
+            ? `
+              <p class="cart-child">
+                Para:
+                <strong>${escapeHTML(item.childName)}</strong>
+              </p>
+            `
+            : "";
+
+
+        product.innerHTML = `
+
+          <div class="cart-product-image">
+
+            <img
+              src="${getProductImage(item.product)}"
+              alt="${item.product}"
+            >
+
+          </div>
+
+
+          <div class="cart-product-info">
+
+            <p class="tag">
+              KIT EDUCATIVO
+            </p>
+
+            <h2>
+              ${item.product}
+            </h2>
+
+            ${childText}
+
+            <p class="cart-price">
+              Preço a definir
+            </p>
+
+          </div>
+
+
+          <div class="cart-product-actions">
+
+            <span class="cart-quantity-label">
+              Quantidade
+            </span>
+
+
+            <div class="quantity-selector">
+
+              <button
+                type="button"
+                onclick="changeQuantity(${index}, -1)"
+                aria-label="Diminuir quantidade"
+              >
+                −
+              </button>
+
+              <span>
+                ${item.quantity}
+              </span>
+
+              <button
+                type="button"
+                onclick="changeQuantity(${index}, 1)"
+                aria-label="Aumentar quantidade"
+              >
+                +
+              </button>
+
+            </div>
+
+
+            <button
+              class="remove-item"
+              type="button"
+              onclick="removeItem(${index})"
+            >
+              Remover
+            </button>
+
+          </div>
+
+        `;
+
+
+        cartItems.appendChild(product);
+
+      });
+
+    }
+
+
+    function changeQuantity(index, change) {
+
+      const cart = getCart();
+
+      cart[index].quantity += change;
+
+
+      if (cart[index].quantity < 1) {
+        cart[index].quantity = 1;
+      }
+
+
+      if (cart[index].quantity > 10) {
+        cart[index].quantity = 10;
+      }
+
+
+      saveCart(cart);
+    }
+
+
+    function removeItem(index) {
+
+      const cart = getCart();
+
+      cart.splice(index, 1);
+
+      saveCart(cart);
+    }
+
+
+    function escapeHTML(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent = text;
+
+      return div.innerHTML;
+    }
+
+
+    renderCart();
+
+  </script>
+
+</body>
+
+</html>
