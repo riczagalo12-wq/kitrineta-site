@@ -421,3 +421,56 @@ main > section {
   color: var(--muted);
   font-size: 10px;
 }
+/* =========================
+   SELETOR DE QUANTIDADE
+   ========================= */
+
+.quantity-area {
+  margin: 20px 0;
+}
+
+.quantity-area > label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--olive);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.quantity-selector {
+  width: 140px;
+  height: 46px;
+
+  display: grid;
+  grid-template-columns: 45px 1fr 45px;
+  align-items: center;
+
+  background: #fff;
+  border: 1.5px solid #ddd8cf;
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.quantity-selector button {
+  height: 100%;
+  border: 0;
+  background: transparent;
+
+  font-family: Nunito, Arial, sans-serif;
+  font-size: 20px;
+  color: var(--olive);
+
+  cursor: pointer;
+}
+
+.quantity-selector button:hover {
+  background: var(--blue2);
+}
+
+.quantity-selector span {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--ink);
+}
