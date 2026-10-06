@@ -474,3 +474,397 @@ main > section {
   font-weight: 900;
   color: var(--ink);
 }
+/* ==========================================
+   PÁGINA DO CARRINHO — KITRINETA
+   ========================================== */
+
+.cart-page {
+  width: min(1000px, calc(100% - 40px));
+  margin: 55px auto 90px;
+}
+
+
+/* TÍTULO */
+
+.cart-heading {
+  margin-bottom: 35px;
+}
+
+.cart-heading h1 {
+  font-family: 'KidspaceWeb', 'Kidspace', cursive;
+  font-weight: normal;
+  font-size: clamp(48px, 5vw, 64px);
+  line-height: 1;
+  color: var(--olive);
+  margin: 8px 0 12px;
+}
+
+.cart-heading > p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+
+/* LISTA DE PRODUTOS */
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+/* PRODUTO */
+
+.cart-product {
+  display: grid;
+  grid-template-columns: 150px 1fr auto;
+  gap: 24px;
+  align-items: center;
+
+  padding: 18px;
+
+  background: #fff;
+  border: 1px solid #eceae5;
+  border-radius: 20px;
+
+  box-shadow: 0 8px 28px rgba(49, 70, 75, 0.06);
+}
+
+
+/* IMAGEM */
+
+.cart-product-image {
+  width: 150px;
+  height: 130px;
+
+  background: var(--cream);
+
+  border-radius: 15px;
+
+  padding: 8px;
+
+  overflow: hidden;
+}
+
+.cart-product-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+
+/* INFORMAÇÃO */
+
+.cart-product-info {
+  min-width: 0;
+}
+
+.cart-product-info .tag {
+  display: block;
+
+  color: var(--orange) !important;
+
+  font-size: 9px !important;
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 5px;
+}
+
+.cart-product-info h2 {
+  font-family: 'KidspaceWeb', 'Kidspace', cursive;
+
+  font-size: 31px;
+  font-weight: normal;
+
+  color: var(--olive);
+
+  margin: 0 0 8px;
+}
+
+.cart-child {
+  margin: 5px 0;
+
+  font-size: 13px;
+
+  color: var(--muted);
+}
+
+.cart-child strong {
+  color: var(--ink);
+}
+
+.cart-price {
+  margin: 9px 0 0;
+
+  color: var(--blue);
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+
+/* QUANTIDADE + REMOVER */
+
+.cart-product-actions {
+  min-width: 145px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  gap: 9px;
+}
+
+.cart-quantity-label {
+  font-size: 10px;
+  font-weight: 900;
+
+  color: var(--muted);
+}
+
+
+/* BOTÃO REMOVER */
+
+.remove-item {
+  border: 0;
+  background: transparent;
+
+  padding: 3px;
+
+  color: #999;
+
+  font-family: Nunito, Arial, sans-serif;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.remove-item:hover {
+  color: var(--orange);
+}
+
+
+/* ==========================================
+   RESUMO DA ENCOMENDA
+   ========================================== */
+
+.cart-summary {
+  width: min(420px, 100%);
+
+  margin: 32px 0 0 auto;
+
+  padding: 25px;
+
+  background: var(--cream);
+
+  border: 1px solid #f0e9df;
+  border-radius: 20px;
+}
+
+.cart-summary > div:first-child {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 16px;
+
+  border-bottom: 1px solid #e9e1d7;
+
+  color: var(--olive);
+
+  font-size: 14px;
+  font-weight: 900;
+}
+
+#cartTotalQuantity {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 31px;
+  height: 31px;
+
+  padding: 0 8px;
+
+  background: var(--blue2);
+
+  border-radius: 30px;
+
+  color: var(--blue);
+}
+
+
+/* NOTA */
+
+.cart-summary-note {
+  padding: 17px 0 5px;
+}
+
+.cart-summary-note p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+
+/* FINALIZAR COMPRA */
+
+.checkout-button {
+  width: 100%;
+
+  margin-top: 17px;
+
+  border: 0;
+
+  font-family: Nunito, Arial, sans-serif;
+
+  cursor: pointer;
+}
+
+.checkout-button:disabled {
+  opacity: .45;
+
+  cursor: not-allowed;
+}
+
+
+/* ==========================================
+   CARRINHO VAZIO
+   ========================================== */
+
+.empty-cart {
+  max-width: 600px;
+
+  margin: 45px auto;
+
+  padding: 50px 30px;
+
+  text-align: center;
+
+  background: var(--cream);
+
+  border-radius: 25px;
+}
+
+.empty-cart-icon {
+  width: 75px;
+  height: 75px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: var(--blue2);
+
+  border-radius: 50%;
+
+  font-size: 27px;
+}
+
+.empty-cart h2 {
+  font-family: 'KidspaceWeb', 'Kidspace', cursive;
+
+  font-size: 36px;
+  font-weight: normal;
+
+  color: var(--olive);
+
+  margin: 0 0 10px;
+}
+
+.empty-cart p {
+  color: var(--muted);
+
+  font-size: 13px;
+
+  margin-bottom: 24px;
+}
+
+
+/* ==========================================
+   ÍCONE CARRINHO NO MENU
+   ========================================== */
+
+a.cart {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  color: var(--ink);
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media(max-width: 700px) {
+
+  .cart-page {
+    width: calc(100% - 28px);
+
+    margin-top: 35px;
+  }
+
+  .cart-heading h1 {
+    font-size: 46px;
+  }
+
+  .cart-product {
+    grid-template-columns: 95px 1fr;
+
+    gap: 15px;
+
+    padding: 13px;
+  }
+
+  .cart-product-image {
+    width: 95px;
+    height: 100px;
+  }
+
+  .cart-product-info h2 {
+    font-size: 27px;
+  }
+
+  .cart-product-actions {
+    grid-column: 1 / -1;
+
+    width: 100%;
+
+    padding-top: 12px;
+
+    border-top: 1px solid #eeeae4;
+
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cart-quantity-label {
+    display: none;
+  }
+
+  .cart-summary {
+    margin-top: 22px;
+  }
+
+}
