@@ -141,3 +141,29 @@ footer p {
   font-family: 'KidspaceWeb' !important;
   font-weight: normal !important;
 }
+/* ONDA KITRINETA — LATERAL DIREITA */
+
+main::after {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 650px;
+  right: -330px;
+  top: 850px;
+
+  background: rgba(89, 183, 200, 0.16);
+
+  border-radius:
+    70% 30% 60% 40%
+    / 35% 55% 45% 65%;
+
+  transform: rotate(12deg);
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+main > section {
+  position: relative;
+  z-index: 1;
+}
