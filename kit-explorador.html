@@ -5,18 +5,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>Kits Educativos | Kitrineta</title>
+  <title>Kit Explorador | Kitrineta</title>
 
   <meta
     name="description"
-    content="Descobre os kits educativos Kitrineta, criados para brincar, explorar e aprender."
+    content="Descobre o Kit Explorador Kitrineta — uma aventura para observar, investigar e descobrir a natureza."
   >
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Patrick+Hand&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
     rel="stylesheet"
   >
 
@@ -26,16 +26,12 @@
 
 <body>
 
-  <!-- BARRA SUPERIOR -->
-
   <div class="topbar">
-    <span>✦ Tempo para ser criança</span>
-    <span>✦ Aprender a brincar</span>
-    <span>✦ Kits educativos +4 anos</span>
+    <span>🚚 Envios para todo o país</span>
+    <span>♡ Tempo para ser criança</span>
+    <span>🌿 Aprender a brincar</span>
   </div>
 
-
-  <!-- MENU -->
 
   <header>
 
@@ -52,169 +48,244 @@
     </nav>
 
     <button class="cart">
-      🛒 <span id="cart-count">0</span>
+      🛒 <strong id="cartCount">0</strong>
     </button>
 
   </header>
 
 
-  <!-- CONTEÚDO -->
-
   <main>
 
-    <section class="section" style="margin-top:55px;">
+    <!-- PRODUTO -->
 
-      <div class="section-title">
+    <section class="kit-detail">
 
-        <div>
-          <span>DESCOBRE</span>
 
-          <h2>
-            Uma aventura dentro de cada caixa
-          </h2>
+      <!-- IMAGEM -->
+
+      <div class="kit-detail-image">
+
+        <img
+          src="images/kitexplorador.png"
+          alt="Kit Explorador Kitrineta"
+        >
+
+        <span class="age">
+          A partir dos 4 anos
+        </span>
+
+      </div>
+
+
+      <!-- INFORMAÇÃO -->
+
+      <div class="kit-detail-copy">
+
+        <p class="eyebrow">
+          NATUREZA • DESCOBERTA
+        </p>
+
+        <h1>
+          Kit Explorador
+        </h1>
+
+
+        <p class="kit-intro">
+          Uma aventura para pequenos exploradores que gostam
+          de observar, investigar e descobrir o mundo à sua volta.
+        </p>
+
+
+        <p class="kit-price">
+          Preço a definir
+        </p>
+
+
+        <!-- NOME DA CRIANÇA -->
+
+        <div class="personalization">
+
+          <label for="childName">
+            Qual o nome da criança que vai receber o kit?
+            <span>*</span>
+          </label>
+
+          <input
+            type="text"
+            id="childName"
+            name="childName"
+            maxlength="45"
+            placeholder="Nome da criança"
+            required
+          >
+
+          <small>
+            Personalizamos a experiência especialmente para ela.
+          </small>
+
         </div>
 
+
+        <!-- BENEFÍCIOS -->
+
+        <div class="kit-benefits">
+
+          <span>🌿 Explorar a natureza</span>
+
+          <span>🔎 Observar e investigar</span>
+
+          <span>🧠 Estimular a curiosidade</span>
+
+          <span>🙌 Aprender fazendo</span>
+
+        </div>
+
+
+        <button
+          class="btn primary add"
+          data-product="Kit Explorador"
+        >
+          Adicionar ao carrinho
+        </button>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- SOBRE O KIT -->
+
+    <section class="kit-about">
+
+      <div>
+
+        <p class="eyebrow">
+          DESCOBRIR O MUNDO
+        </p>
+
+        <h2>
+          Uma caixa. Muitas aventuras.
+        </h2>
+
         <p>
-          Conteúdos, materiais e atividades pensados para
-          despertar a curiosidade e dar espaço às crianças
-          para descobrir, experimentar e aprender.
+          O Kit Explorador foi pensado para incentivar as crianças
+          a sair, observar e descobrir.
+        </p>
+
+        <p>
+          Cada atividade transforma a curiosidade numa experiência
+          prática e divertida, dando espaço à criança para observar,
+          experimentar, fazer perguntas e registar as suas próprias
+          descobertas.
         </p>
 
       </div>
 
 
-      <div class="products">
+      <div class="kit-about-highlight">
 
+        <strong>
+          Menos ecrãs.<br>
+          Mais mundo real.
+        </strong>
 
-        <!-- ====================== -->
-        <!-- KIT DINOSSAURO -->
-        <!-- ====================== -->
+      </div>
 
-        <article class="product">
-
-          <div class="product-image">
-
-            <img
-              src="images/kitdinossauro.png"
-              alt="Conteúdo do Kit Dinossauro"
-            >
-
-            <span class="age">
-              A partir dos 4 anos
-            </span>
-
-          </div>
-
-
-          <div class="product-info">
-
-            <div>
-
-              <span class="tag">
-                PALEONTOLOGIA • CRIATIVIDADE
-              </span>
-
-              <h3>Kit Dinossauro</h3>
-
-              <p>
-                Viaja ao passado, investiga fósseis e entra
-                no fascinante mundo dos dinossauros.
-              </p>
-
-            </div>
-
-
-            <strong class="price">
-              Preço a definir
-            </strong>
-
-          </div>
-
-
-          <div class="product-actions">
-
-            <button class="outline">
-              Saber mais
-            </button>
-
-            <button
-              class="add"
-              data-product="Kit Dinossauro"
-            >
-              Adicionar ao carrinho
-            </button>
-
-          </div>
-
-        </article>
+    </section>
 
 
 
-        <!-- ====================== -->
-        <!-- KIT EXPLORADOR -->
-        <!-- ====================== -->
+    <!-- CONTEÚDO -->
 
-        <article class="product">
+    <section class="kit-inside">
 
-          <div class="product-image">
+      <div class="section-title">
 
-            <img
-              src="images/kitexplorador.png"
-              alt="Conteúdo do Kit Explorador"
-            >
+        <div>
 
-            <span class="age">
-              A partir dos 4 anos
-            </span>
+          <span>
+            DENTRO DA CAIXA
+          </span>
 
-          </div>
+          <h2>
+            O que vais encontrar?
+          </h2>
 
+        </div>
 
-          <div class="product-info">
+        <p>
+          Materiais e atividades preparados para transformar
+          cada saída numa pequena expedição.
+        </p>
 
-            <div>
-
-              <span class="tag">
-                NATUREZA • DESCOBERTA
-              </span>
-
-              <h3>Kit Explorador</h3>
-
-              <p>
-                Uma aventura para observar, investigar
-                e descobrir o mundo lá fora.
-              </p>
-
-            </div>
+      </div>
 
 
-            <strong class="price">
-              Preço a definir
-            </strong>
+      <div class="kit-items">
 
-          </div>
+        <div>
+          🔭
+          <strong>Binóculos</strong>
+          <span>
+            Para observar o mundo mais de perto.
+          </span>
+        </div>
 
 
-          <div class="product-actions">
+        <div>
+          🧭
+          <strong>Bússola</strong>
+          <span>
+            Para descobrir direções e começar a explorar.
+          </span>
+        </div>
 
-            <a
-              class="outline kit-link"
-              href="kit-explorador.html"
-            >
-              Saber mais
-            </a>
 
-            <button
-              class="add"
-              data-product="Kit Explorador"
-            >
-              Adicionar ao carrinho
-            </button>
+        <div>
+          🌿
+          <strong>Atividades da natureza</strong>
+          <span>
+            Desafios para observar cores, formas e texturas.
+          </span>
+        </div>
 
-          </div>
 
-        </article>
+        <div>
+          📖
+          <strong>Caderno de exploração</strong>
+          <span>
+            Um espaço para registar descobertas e aventuras.
+          </span>
+        </div>
 
+      </div>
+
+    </section>
+
+
+
+    <!-- COMPETÊNCIAS -->
+
+    <section class="kit-skills">
+
+      <p class="eyebrow">
+        APRENDER A BRINCAR
+      </p>
+
+      <h2>
+        Enquanto explora, também cresce.
+      </h2>
+
+
+      <div class="skill-grid">
+
+        <span>🧠 Cognição</span>
+        <span>🎯 Concentração</span>
+        <span>🚀 Imaginação</span>
+        <span>🙌 Autonomia</span>
+        <span>💬 Linguagem</span>
+        <span>🌿 Curiosidade</span>
 
       </div>
 
@@ -222,8 +293,6 @@
 
   </main>
 
-
-  <!-- RODAPÉ -->
 
   <footer>
 
@@ -242,8 +311,6 @@
 
   </footer>
 
-
-  <!-- MENSAGEM CARRINHO -->
 
   <div
     class="toast"
