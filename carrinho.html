@@ -1,175 +1,823 @@
-exports.handler = async function (event) {
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  // Só aceitamos pedidos POST
-  if (event.httpMethod !== "POST") {
-    return {
-      statusCode: 405,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        success: false,
-        message: "Método não permitido."
-      })
-    };
-  }
+  <title>Carrinho | Kitrineta</title>
+
+  <meta
+    name="description"
+    content="Carrinho de compras Kitrineta."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="topbar">
+    <span>🚚 Envios para todo o país</span>
+    <span>♡ Tempo para ser criança</span>
+    <span>🌿 Aprender a brincar</span>
+  </div>
+
+
+  <header>
+
+    <a class="logo" href="index.html">
+      <img src="images/logo.png" alt="Kitrineta">
+    </a>
+
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="kits.html">Kits</a>
+      <a href="index.html#descobrir">Descobrir</a>
+      <a href="index.html#festas">Festas & Eventos</a>
+      <a href="index.html#sobre">Sobre nós</a>
+    </nav>
+
+    <a class="cart" href="carrinho.html">
+      🛒 <strong id="cartCount">0</strong>
+    </a>
+
+  </header>
+
+
+  <main>
+
+    <section class="cart-page">
+
+      <div class="cart-heading">
+
+        <p class="eyebrow">
+          A TUA ENCOMENDA
+        </p>
+
+        <h1>
+          O teu carrinho
+        </h1>
+
+        <p>
+          Confirma os teus kits antes de continuares.
+        </p>
+
+      </div>
+
+
+      <div
+        class="cart-items"
+        id="cartItems">
+      </div>
+
+
+      <div
+        class="empty-cart"
+        id="emptyCart">
+
+        <div class="empty-cart-icon">
+          🛒
+        </div>
+
+        <h2>
+          O teu carrinho está vazio.
+        </h2>
+
+        <p>
+          Há muitas aventuras à espera
+          de pequenos exploradores.
+        </p>
+
+        <a
+          class="btn primary"
+          href="kits.html">
+          Descobrir os Kits →
+        </a>
+
+      </div>
+
+
+      <div
+        class="cart-summary"
+        id="cartSummary">
+
+        <div>
+          <span>Produtos</span>
+          <strong id="cartTotalQuantity">
+            0
+          </strong>
+        </div>
+
+
+        <div class="cart-money-row">
+          <span>Subtotal</span>
+
+          <strong id="cartSubtotal">
+            0,00 €
+          </strong>
+        </div>
+
+
+        <div class="cart-money-row">
+          <span>Envio</span>
+
+          <strong>
+            A calcular
+          </strong>
+        </div>
+
+
+        <div class="cart-total-row">
+
+          <span>Total</span>
+
+          <strong id="cartTotal">
+            0,00 €
+          </strong>
+
+        </div>
+
+
+        <p class="cart-shipping-note">
+          Os custos de envio serão calculados
+          antes do pagamento.
+        </p>
+
+
+        <button
+          class="btn primary checkout-button"
+          id="checkoutButton"
+          type="button">
+
+          Finalizar compra →
+
+        </button>
+
+
+        <p
+          id="checkoutMessage"
+          style="
+            display:none;
+            margin-top:14px;
+            font-size:12px;
+            line-height:1.5;
+          ">
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <img
+      src="images/logo.png"
+      alt="Kitrineta"
+    >
+
+    <p>
+      Descobrir ser criança.
+    </p>
+
+    <small>
+      © 2026 Kitrineta ·
+      Política de Privacidade ·
+      Termos e Condições
+    </small>
+
+  </footer>
+
+
+<script>
+
+const PRODUCT_PRICES = {
+
+  "Kit Explorador": 54.90,
+
+  "Kit Dinossauro": 54.90
+
+};
+
+
+const NETLIFY_CHECKOUT_URL =
+  "https://cute-profiterole-833561.netlify.app/.netlify/functions/create-checkout";
+
+
+
+function formatPrice(value) {
+
+  return value.toLocaleString(
+    "pt-PT",
+    {
+      style: "currency",
+      currency: "EUR"
+    }
+  );
+
+}
+
+
+
+function getCart() {
 
   try {
 
-    const data = JSON.parse(event.body || "{}");
+    return JSON.parse(
+      localStorage.getItem("kitrinetaCart")
+    ) || [];
 
-    const quantity = Math.max(
-      1,
-      Math.min(10, Number(data.quantity) || 1)
+  }
+
+  catch (error) {
+
+    return [];
+
+  }
+
+}
+
+
+
+function saveCart(cart) {
+
+  localStorage.setItem(
+    "kitrinetaCart",
+    JSON.stringify(cart)
+  );
+
+  renderCart();
+
+}
+
+
+
+function getProductImage(product) {
+
+  if (
+    product === "Kit Explorador"
+  ) {
+
+    return "images/kitexplorador.png";
+
+  }
+
+
+  if (
+    product === "Kit Dinossauro"
+  ) {
+
+    return "images/kitdinossauro.png";
+
+  }
+
+
+  return "images/logo.png";
+
+}
+
+
+
+function escapeHTML(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+
+}
+
+
+
+function renderCart() {
+
+  const cart =
+    getCart();
+
+
+  const cartItems =
+    document.getElementById(
+      "cartItems"
     );
 
-    const PRICE = 54.90;
 
-    const total = Number(
-      (PRICE * quantity).toFixed(2)
+  const emptyCart =
+    document.getElementById(
+      "emptyCart"
     );
 
-    // Credenciais públicas OFICIAIS
-    // do ambiente de TESTE Easypay
-    const TEST_ACCOUNT_ID =
-      "2b0f63e2-9fb5-4e52-aca0-b4bf0339bbe6";
 
-    const TEST_API_KEY =
-      "eae4aa59-8e5b-4ec2-887d-b02768481a92";
+  const cartSummary =
+    document.getElementById(
+      "cartSummary"
+    );
 
 
-    const orderKey =
-      "kitrineta-" +
-      Date.now();
+  const totalQuantity =
+    cart.reduce(
+      function(total, item) {
+
+        return (
+          total +
+          Number(
+            item.quantity || 1
+          )
+        );
+
+      },
+      0
+    );
 
 
-    const response = await fetch(
-      "https://api.test.easypay.pt/2.0/checkout",
-      {
-        method: "POST",
+  let subtotal = 0;
 
-        headers: {
-          "AccountId": TEST_ACCOUNT_ID,
-          "ApiKey": TEST_API_KEY,
-          "Content-Type": "application/json"
-        },
 
-        body: JSON.stringify({
+  cart.forEach(
+    function(item) {
 
-          type: [
-            "single"
-          ],
+      const price =
+        PRODUCT_PRICES[
+          item.product
+        ] || 0;
 
-          payment: {
 
-            methods: [
-              "cc",
-              "mb",
-              "mbw"
-            ],
+      subtotal +=
+        price *
+        Number(
+          item.quantity || 1
+        );
 
-            type: "sale",
+    }
+  );
 
-            currency: "EUR",
 
-            capture: {
-              descriptive: "Kitrineta"
-            }
+  document.getElementById(
+    "cartCount"
+  ).textContent =
+    totalQuantity;
+
+
+  document.getElementById(
+    "cartTotalQuantity"
+  ).textContent =
+    totalQuantity;
+
+
+  document.getElementById(
+    "cartSubtotal"
+  ).textContent =
+    formatPrice(subtotal);
+
+
+  document.getElementById(
+    "cartTotal"
+  ).textContent =
+    formatPrice(subtotal);
+
+
+  cartItems.innerHTML = "";
+
+
+  if (
+    cart.length === 0
+  ) {
+
+    emptyCart.style.display =
+      "block";
+
+    cartSummary.style.display =
+      "none";
+
+    return;
+
+  }
+
+
+  emptyCart.style.display =
+    "none";
+
+
+  cartSummary.style.display =
+    "block";
+
+
+
+  cart.forEach(
+    function(item, index) {
+
+      const price =
+        PRODUCT_PRICES[
+          item.product
+        ] || 0;
+
+
+      const itemTotal =
+        price *
+        Number(
+          item.quantity || 1
+        );
+
+
+      const product =
+        document.createElement(
+          "article"
+        );
+
+
+      product.className =
+        "cart-product";
+
+
+      const childText =
+        item.childName
+
+        ? `
+          <p class="cart-child">
+            Para:
+            <strong>
+              ${escapeHTML(
+                item.childName
+              )}
+            </strong>
+          </p>
+        `
+
+        : "";
+
+
+      product.innerHTML = `
+
+        <div class="cart-product-image">
+
+          <img
+            src="${getProductImage(
+              item.product
+            )}"
+            alt="${escapeHTML(
+              item.product
+            )}"
+          >
+
+        </div>
+
+
+        <div class="cart-product-info">
+
+          <p class="tag">
+            KIT EDUCATIVO
+          </p>
+
+          <h2>
+            ${escapeHTML(
+              item.product
+            )}
+          </h2>
+
+          ${childText}
+
+          <p class="cart-price">
+
+            ${formatPrice(
+              price
+            )} cada
+
+          </p>
+
+          <p class="cart-line-total">
+
+            ${formatPrice(
+              itemTotal
+            )}
+
+          </p>
+
+        </div>
+
+
+        <div class="cart-product-actions">
+
+          <span class="cart-quantity-label">
+            Quantidade
+          </span>
+
+
+          <div class="quantity-selector">
+
+            <button
+              type="button"
+              onclick="
+                changeQuantity(
+                  ${index},
+                  -1
+                )
+              "
+              aria-label="
+                Diminuir quantidade
+              ">
+              −
+            </button>
+
+
+            <span>
+              ${item.quantity}
+            </span>
+
+
+            <button
+              type="button"
+              onclick="
+                changeQuantity(
+                  ${index},
+                  1
+                )
+              "
+              aria-label="
+                Aumentar quantidade
+              ">
+              +
+            </button>
+
+          </div>
+
+
+          <button
+            class="remove-item"
+            type="button"
+            onclick="
+              removeItem(
+                ${index}
+              )
+            ">
+            Remover
+          </button>
+
+        </div>
+
+      `;
+
+
+      cartItems.appendChild(
+        product
+      );
+
+    }
+  );
+
+}
+
+
+
+function changeQuantity(
+  index,
+  change
+) {
+
+  const cart =
+    getCart();
+
+
+  cart[index].quantity =
+    Number(
+      cart[index].quantity || 1
+    ) +
+    change;
+
+
+  if (
+    cart[index].quantity < 1
+  ) {
+
+    cart[index].quantity = 1;
+
+  }
+
+
+  if (
+    cart[index].quantity > 10
+  ) {
+
+    cart[index].quantity = 10;
+
+  }
+
+
+  saveCart(cart);
+
+}
+
+
+
+function removeItem(index) {
+
+  const cart =
+    getCart();
+
+
+  cart.splice(
+    index,
+    1
+  );
+
+
+  saveCart(cart);
+
+}
+
+
+
+// ==========================================
+// TESTE CHECKOUT EASYPAY
+// ==========================================
+
+async function startCheckout() {
+
+  const cart =
+    getCart();
+
+
+  const button =
+    document.getElementById(
+      "checkoutButton"
+    );
+
+
+  const message =
+    document.getElementById(
+      "checkoutMessage"
+    );
+
+
+  if (
+    cart.length === 0
+  ) {
+
+    return;
+
+  }
+
+
+  const explorerQuantity =
+    cart.reduce(
+      function(total, item) {
+
+        if (
+          item.product ===
+          "Kit Explorador"
+        ) {
+
+          return (
+            total +
+            Number(
+              item.quantity || 1
+            )
+          );
+
+        }
+
+
+        return total;
+
+      },
+      0
+    );
+
+
+  if (
+    explorerQuantity === 0
+  ) {
+
+    message.style.display =
+      "block";
+
+    message.textContent =
+      "Neste primeiro teste vamos utilizar o Kit Explorador.";
+
+    return;
+
+  }
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "A ligar à Easypay...";
+
+
+  message.style.display =
+    "none";
+
+
+  try {
+
+    const response =
+      await fetch(
+        NETLIFY_CHECKOUT_URL,
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json"
 
           },
 
-          order: {
+          body: JSON.stringify({
 
-            items: [
-              {
-                description:
-                  "Kit Explorador",
+            quantity:
+              explorerQuantity
 
-                quantity:
-                  quantity,
+          })
 
-                key:
-                  "kit-explorador",
-
-                value:
-                  PRICE
-              }
-            ],
-
-            key:
-              orderKey,
-
-            value:
-              total
-          }
-
-        })
-      }
-    );
+        }
+      );
 
 
     const result =
       await response.json();
 
 
-    if (!response.ok) {
+    console.log(
+      "Resposta Easypay:",
+      result
+    );
 
-      return {
-        statusCode: response.status,
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+    message.style.display =
+      "block";
 
-        body: JSON.stringify({
-          success: false,
-          error: result
-        })
-      };
+
+    if (
+      response.ok &&
+      result.success
+    ) {
+
+      message.textContent =
+        "✅ A Easypay respondeu! O checkout de teste foi criado.";
 
     }
 
+    else {
 
-    return {
+      message.textContent =
+        "❌ A Easypay respondeu com um erro. Vamos verificar juntos.";
 
-      statusCode: 200,
-
-      headers: {
-        "Content-Type":
-          "application/json",
-
-        "Access-Control-Allow-Origin":
-          "*"
-      },
-
-      body: JSON.stringify({
-        success: true,
-        manifest: result
-      })
-
-    };
-
-
-  } catch (error) {
-
-    return {
-
-      statusCode: 500,
-
-      headers: {
-        "Content-Type":
-          "application/json"
-      },
-
-      body: JSON.stringify({
-        success: false,
-        message:
-          "Erro ao criar checkout de teste."
-      })
-
-    };
+    }
 
   }
 
-};
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    message.style.display =
+      "block";
+
+
+    message.textContent =
+      "❌ Não foi possível contactar o checkout. Vamos verificar juntos.";
+
+  }
+
+
+  button.disabled = false;
+
+  button.textContent =
+    "Finalizar compra →";
+
+}
+
+
+
+document
+  .getElementById(
+    "checkoutButton"
+  )
+  .addEventListener(
+    "click",
+    startCheckout
+  );
+
+
+renderCart();
+
+</script>
+
+</body>
+</html>
