@@ -3,132 +3,209 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>Kits Educativos | Kitrineta</title>
+
+  <meta name="description" content="Descobre os kits educativos Kitrineta, criados para brincar, explorar e aprender.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Patrick+Hand&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-  <a class="logo" href="index.html">
-    <img src="images/logo.png" alt="Kitrineta">
-  </a>
-
-  <nav>
-    <a href="index.html">Início</a>
-    <a href="kits.html">Kits</a>
-    <a href="index.html#descobrir">Descobrir</a>
-    <a href="index.html#festas">Festas & Eventos</a>
-    <a href="index.html#sobre">Sobre nós</a>
-  </nav>
-
-  <div class="cart">
-    🛒 <span>0</span>
+  <div class="topbar">
+    <span>✦ Tempo para ser criança</span>
+    <span>✦ Aprender a brincar</span>
+    <span>✦ Kits educativos +4 anos</span>
   </div>
-</header>
+
+  <header>
+
+    <a class="logo" href="index.html">
+      <img src="images/logo.png" alt="Kitrineta">
+    </a>
+
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="kits.html">Kits</a>
+      <a href="index.html#descobrir">Descobrir</a>
+      <a href="index.html#festas">Festas & Eventos</a>
+      <a href="index.html#sobre">Sobre nós</a>
+    </nav>
+
+    <button class="cart">
+      🛒 <span id="cart-count">0</span>
+    </button>
+
+  </header>
 
 
-<main>
+  <main>
 
-  <section id="kits" class="section">
+    <section class="section" style="margin-top:55px;">
 
-    <div class="section-title">
-      <div>
-        <span>DESCOBRE</span>
-        <h2>Uma aventura dentro de cada caixa</h2>
+      <div class="section-title">
+
+        <div>
+          <span>DESCOBRE</span>
+          <h2>Uma aventura dentro de cada caixa</h2>
+        </div>
+
+        <p>
+          Conteúdos, materiais e atividades pensados para despertar
+          a curiosidade e dar espaço às crianças para descobrir,
+          experimentar e aprender.
+        </p>
+
       </div>
 
-      <p>
-        Conteúdos, materiais e atividades pensados para despertar
-        a curiosidade.
-      </p>
-    </div>
 
+      <div class="products">
 
-    <div class="products">
+        <!-- KIT DINOSSAURO -->
 
-      <!-- KIT DINOSSAURO -->
+        <article class="product">
 
-      <article class="product">
+          <div class="product-image">
 
-        <div class="product-image">
-          <img
-            src="images/dinossauro.jpg"
-            alt="Conteúdo do Kit Dinossauro"
-          >
-          <span class="age">A partir dos 4 anos</span>
-        </div>
+            <img
+              src="images/dinossauro.jpg"
+              alt="Conteúdo do Kit Dinossauro"
+            >
 
-        <div class="product-body">
+            <span class="age">
+              A partir dos 4 anos
+            </span>
 
-          <div class="product-meta">
-            <span>PALEONTOLOGIA • CRIATIVIDADE</span>
           </div>
 
-          <h3>Kit Dinossauro</h3>
 
-          <p>
-            Viaja ao passado, investiga fósseis e entra no
-            fascinante mundo dos dinossauros.
-          </p>
+          <div class="product-info">
 
-          <a class="btn btn-primary" href="kit-dinossauro.html">
-            Ver Kit →
-          </a>
+            <div>
 
-        </div>
+              <span class="tag">
+                PALEONTOLOGIA • CRIATIVIDADE
+              </span>
 
-      </article>
+              <h3>Kit Dinossauro</h3>
 
+              <p>
+                Viaja ao passado, investiga fósseis e entra
+                no fascinante mundo dos dinossauros.
+              </p>
 
-      <!-- KIT EXPLORADOR -->
+            </div>
 
-      <article class="product">
+            <strong class="price">
+              Preço a definir
+            </strong>
 
-        <div class="product-image">
-          <img
-            src="images/explorador.jpg"
-            alt="Conteúdo do Kit Explorador"
-          >
-          <span class="age">A partir dos 4 anos</span>
-        </div>
-
-        <div class="product-body">
-
-          <div class="product-meta">
-            <span>NATUREZA • DESCOBERTA</span>
           </div>
 
-          <h3>Kit Explorador</h3>
 
-          <p>
-            Binóculos, atividades e ferramentas para observar,
-            investigar e descobrir a natureza.
-          </p>
+          <div class="product-actions">
 
-          <a class="btn btn-primary" href="kit-explorador.html">
-            Ver Kit →
-          </a>
+            <button class="outline">
+              Saber mais
+            </button>
 
-        </div>
+            <button class="add" data-product="Kit Dinossauro">
+              Adicionar ao carrinho
+            </button>
 
-      </article>
+          </div>
 
-    </div>
-
-  </section>
-
-</main>
+        </article>
 
 
-<footer>
-  <img src="images/logo.png" alt="Kitrineta">
-  <p>Descobrir ser criança.</p>
-  <small>© 2026 Kitrineta</small>
-</footer>
 
-<script src="script.js"></script>
+        <!-- KIT EXPLORADOR -->
+
+        <article class="product">
+
+          <div class="product-image">
+
+            <img
+              src="images/explorador.jpg"
+              alt="Conteúdo do Kit Explorador"
+            >
+
+            <span class="age">
+              A partir dos 4 anos
+            </span>
+
+          </div>
+
+
+          <div class="product-info">
+
+            <div>
+
+              <span class="tag">
+                NATUREZA • DESCOBERTA
+              </span>
+
+              <h3>Kit Explorador</h3>
+
+              <p>
+                Uma aventura para observar, investigar
+                e descobrir o mundo lá fora.
+              </p>
+
+            </div>
+
+            <strong class="price">
+              Preço a definir
+            </strong>
+
+          </div>
+
+
+          <div class="product-actions">
+
+            <button class="outline">
+              Saber mais
+            </button>
+
+            <button class="add" data-product="Kit Explorador">
+              Adicionar ao carrinho
+            </button>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <img src="images/logo.png" alt="Kitrineta">
+
+    <p>Descobrir ser criança.</p>
+
+    <small>
+      © 2026 Kitrineta · Política de Privacidade · Termos e Condições
+    </small>
+
+  </footer>
+
+
+  <div class="toast" id="toast">
+    Adicionado ao carrinho!
+  </div>
+
+  <script src="script.js"></script>
 
 </body>
 </html>
