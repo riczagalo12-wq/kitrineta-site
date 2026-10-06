@@ -7,18 +7,14 @@
 
   <title>Kit Explorador | Kitrineta</title>
 
-  <meta
-    name="description"
-    content="Descobre o Kit Explorador Kitrineta — uma aventura para observar, investigar e descobrir a natureza."
-  >
+  <meta name="description"
+        content="Descobre o Kit Explorador Kitrineta — uma aventura para observar, investigar e descobrir a natureza.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -26,16 +22,12 @@
 
 <body>
 
-  <!-- BARRA SUPERIOR -->
-
   <div class="topbar">
     <span>🚚 Envios para todo o país</span>
     <span>♡ Tempo para ser criança</span>
     <span>🌿 Aprender a brincar</span>
   </div>
 
-
-  <!-- MENU -->
 
   <header>
 
@@ -51,9 +43,9 @@
       <a href="index.html#sobre">Sobre nós</a>
     </nav>
 
-    <button class="cart">
+    <a class="cart" href="carrinho.html">
       🛒 <strong id="cartCount">0</strong>
-    </button>
+    </a>
 
   </header>
 
@@ -63,9 +55,6 @@
     <!-- PRODUTO -->
 
     <section class="kit-detail">
-
-
-      <!-- IMAGEM -->
 
       <div class="kit-detail-image">
 
@@ -81,8 +70,6 @@
       </div>
 
 
-      <!-- INFORMAÇÃO -->
-
       <div class="kit-detail-copy">
 
         <p class="eyebrow">
@@ -93,12 +80,10 @@
           Kit Explorador
         </h1>
 
-
         <p class="kit-intro">
           Uma aventura para pequenos exploradores que gostam
           de observar, investigar e descobrir o mundo à sua volta.
         </p>
-
 
         <p class="kit-price">
           Preço a definir
@@ -193,7 +178,7 @@
 
 
 
-    <!-- SOBRE O KIT -->
+    <!-- APRESENTAÇÃO -->
 
     <section class="kit-about">
 
@@ -208,15 +193,15 @@
         </h2>
 
         <p>
-          O Kit Explorador foi pensado para incentivar as crianças
-          a sair, observar e descobrir.
+          O Kit Explorador foi pensado para incentivar as
+          crianças a sair, observar e descobrir.
         </p>
 
         <p>
-          Cada atividade transforma a curiosidade numa experiência
-          prática e divertida, dando espaço à criança para observar,
-          experimentar, fazer perguntas e registar as suas próprias
-          descobertas.
+          Cada atividade transforma a curiosidade numa
+          experiência prática e divertida, dando espaço à
+          criança para observar, experimentar, fazer perguntas
+          e registar as suas próprias descobertas.
         </p>
 
       </div>
@@ -235,7 +220,7 @@
 
 
 
-    <!-- CONTEÚDO DO KIT -->
+    <!-- CONTEÚDO -->
 
     <section class="kit-inside">
 
@@ -271,6 +256,7 @@
           </span>
         </div>
 
+
         <div>
           🧭
           <strong>Bússola</strong>
@@ -279,6 +265,7 @@
           </span>
         </div>
 
+
         <div>
           🌿
           <strong>Atividades da natureza</strong>
@@ -286,6 +273,7 @@
             Desafios para observar cores, formas e texturas.
           </span>
         </div>
+
 
         <div>
           📖
@@ -313,6 +301,7 @@
         Enquanto explora, também cresce.
       </h2>
 
+
       <div class="skill-grid">
 
         <span>🧠 Cognição</span>
@@ -329,14 +318,10 @@
   </main>
 
 
-  <!-- RODAPÉ -->
 
   <footer>
 
-    <img
-      src="images/logo.png"
-      alt="Kitrineta"
-    >
+    <img src="images/logo.png" alt="Kitrineta">
 
     <p>
       Descobrir ser criança.
@@ -349,45 +334,64 @@
   </footer>
 
 
-  <div
-    class="toast"
-    id="toast"
-  >
+  <div class="toast" id="toast">
     Adicionado ao carrinho!
   </div>
 
 
+  <!-- CARRINHO -->
+
   <script src="script.js"></script>
 
 
-  <!-- CONTROLO DA QUANTIDADE -->
+  <!-- QUANTIDADE -->
 
   <script>
 
-    const quantityMinus = document.getElementById("quantityMinus");
-    const quantityPlus = document.getElementById("quantityPlus");
-    const quantityDisplay = document.getElementById("quantity");
+    const quantityMinus =
+      document.getElementById("quantityMinus");
+
+    const quantityPlus =
+      document.getElementById("quantityPlus");
+
+    const quantityDisplay =
+      document.getElementById("quantity");
 
     let quantity = 1;
 
-    quantityMinus.addEventListener("click", function () {
 
-      if (quantity > 1) {
-        quantity--;
-        quantityDisplay.textContent = quantity;
+    quantityMinus.addEventListener(
+      "click",
+      function () {
+
+        if (quantity > 1) {
+
+          quantity--;
+
+          quantityDisplay.textContent =
+            quantity;
+
+        }
+
       }
+    );
 
-    });
 
+    quantityPlus.addEventListener(
+      "click",
+      function () {
 
-    quantityPlus.addEventListener("click", function () {
+        if (quantity < 10) {
 
-      if (quantity < 10) {
-        quantity++;
-        quantityDisplay.textContent = quantity;
+          quantity++;
+
+          quantityDisplay.textContent =
+            quantity;
+
+        }
+
       }
-
-    });
+    );
 
   </script>
 
