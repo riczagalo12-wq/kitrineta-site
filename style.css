@@ -167,3 +167,26 @@ main > section {
   position: relative;
   z-index: 1;
 }
+/* FORMA LARANJA KITRINETA */
+
+.experience::before {
+  content: "";
+  position: absolute;
+
+  width: 320px;
+  height: 180px;
+
+  left: -240px;
+  bottom: -80px;
+
+  background: rgba(244, 122, 61, 0.12);
+
+  border-radius:
+    65% 35% 55% 45%
+    / 55% 65% 35% 45%;
+
+  transform: rotate(-12deg);
+
+  pointer-events: none;
+  z-index: -1;
+}
