@@ -1,26 +1,43 @@
 :root{--blue:#59b7c8;--blue2:#e8f7f8;--orange:#f47a3d;--yellow:#f6c64d;--olive:#4d5b35;--cream:#fffaf3;--ink:#263238;--muted:#667478}*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{margin:0;overflow-x:hidden;font-family:Nunito,Arial,sans-serif;color:var(--ink);background:#fff}img{display:block;max-width:100%}a{text-decoration:none;color:inherit}.topbar{min-height:30px;background:var(--olive);color:#fff;display:flex;justify-content:center;gap:80px;align-items:center;padding:6px 20px;font-size:11px;font-weight:800}header{height:76px;display:flex;align-items:center;width:min(1120px,calc(100% - 40px));margin:auto;gap:28px}.logo{flex:0 0 auto}.logo img{width:105px;height:58px;object-fit:contain}nav{display:flex;gap:25px;margin-left:auto;font-weight:800;font-size:13px}nav a:hover{color:var(--orange)}.cart{margin-left:18px;border:0;background:var(--blue2);border-radius:50px;padding:8px 12px;font-size:14px}.hero{width:min(1120px,calc(100% - 40px));margin:18px auto 72px;background:var(--cream);border-radius:28px;display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);overflow:hidden;min-height:430px}.hero-copy{padding:48px 42px;align-self:center;min-width:0}.eyebrow{color:var(--orange);font-size:11px;font-weight:900;letter-spacing:1.8px}.hero h1,.section h2,.experience h2,.adventure h2,.party h2,.story h2{font-family:'Patrick Hand',cursive;color:var(--olive);line-height:1.02;margin:12px 0}.hero h1{font-size:clamp(42px,4vw,54px)}.hero h1 em{color:var(--orange);font-style:normal}.hero-copy>p:not(.eyebrow){font-size:15px;line-height:1.55;max-width:420px}.actions{display:flex;gap:10px;margin:24px 0 18px;flex-wrap:wrap}.btn{display:inline-block;padding:11px 17px;border-radius:9px;font-size:13px;font-weight:900}.primary{background:var(--orange);color:#fff}.secondary{border:1.5px solid var(--blue);color:#318a9b}.mini-benefits{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;font-weight:800;color:#617177}.hero-photo{position:relative;min-width:0;height:430px;margin:18px 18px 18px 0;border-radius:22px;overflow:hidden}.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center}.sticker{position:absolute;bottom:18px;left:18px;background:var(--yellow);width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Patrick Hand';font-size:16px;transform:rotate(-7deg)}.section{width:min(1080px,calc(100% - 40px));margin:0 auto 80px}.section-title{display:flex;justify-content:space-between;gap:40px;align-items:end;margin-bottom:24px}.section-title span{font-size:10px;color:var(--blue);font-weight:900;letter-spacing:1.8px}.section-title h2{font-size:38px;margin:4px 0}.section-title>p{max-width:330px;font-size:14px;line-height:1.55;color:var(--muted)}.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.product{min-width:0;border:1px solid #eceae5;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 8px 28px #31464b10}.product-image{height:300px;position:relative;background:#faf8f3;padding:14px}.product-image img{width:100%;height:100%;object-fit:contain}.age{position:absolute;top:16px;left:16px;background:#fff;padding:7px 11px;border-radius:30px;font-size:10px;font-weight:900;box-shadow:0 2px 12px #0000000d}.product-info{padding:18px 20px 8px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.tag{font-size:9px!important;color:var(--orange)!important;font-weight:900;letter-spacing:.8px}.product-info h3{font-family:'Patrick Hand';font-size:29px;margin:3px 0;color:var(--olive)}.product-info p{font-size:13px;line-height:1.5;color:#667;max-width:330px}.price{white-space:nowrap;color:var(--blue);font-size:12px}.product-actions{padding:0 20px 20px;display:flex;gap:8px}.product-actions button{padding:10px 13px;border-radius:8px;font-size:12px;font-weight:900;cursor:pointer}.outline{background:#fff;border:1px solid #d8d8d8}.add{border:0;background:var(--blue);color:#fff}.experience{width:min(1120px,calc(100% - 40px));margin:0 auto 80px;background:var(--blue2);border-radius:28px;overflow:hidden;display:grid;grid-template-columns:.92fr 1.08fr}.experience-photo{height:430px;margin:18px 0 18px 18px;border-radius:20px;overflow:hidden}.experience-photo img{width:100%;height:100%;object-fit:cover}.experience-copy{padding:42px 44px;align-self:center}.experience h2{font-size:43px}.experience-copy>p:not(.eyebrow){font-size:14px;line-height:1.6}.skill-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:22px}.skill-grid span{background:#fff;border-radius:10px;padding:10px 12px;font-weight:800;font-size:11px}.adventure{width:min(1080px,calc(100% - 40px));margin:0 auto 80px;display:grid;grid-template-columns:.8fr 1.2fr;gap:42px;align-items:center}.adventure h2{font-size:46px}.adventure p{font-size:14px;line-height:1.6}.adventure-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.adventure-grid img{width:100%;height:330px;object-fit:cover;border-radius:20px}.adventure-grid img:nth-child(2){margin-top:28px}.party{width:min(1120px,calc(100% - 40px));margin:0 auto 80px;background:#fff3df;border-radius:28px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr}.party-photo{height:410px;margin:18px 0 18px 18px;border-radius:20px;overflow:hidden}.party-photo img{width:100%;height:100%;object-fit:cover}.party-copy{padding:42px 44px;align-self:center}.party h2{font-size:46px}.party h3{font-size:17px;color:var(--olive)}.party p{font-size:14px;line-height:1.6}.story{width:min(900px,calc(100% - 40px));margin:0 auto 80px;display:grid;grid-template-columns:150px 1fr;gap:38px;align-items:center;padding:20px}.story img{width:145px;height:110px;object-fit:contain}.story h2{font-size:39px}.story p{font-size:14px;line-height:1.6}footer{text-align:center;background:var(--blue2);padding:32px 20px}footer img{width:90px;height:62px;object-fit:contain;margin:auto}footer p{font-family:'Patrick Hand';font-size:19px;color:var(--olive);margin:7px 0}footer small{font-size:11px;color:#6c777a}.toast{position:fixed;bottom:22px;right:22px;background:var(--olive);color:#fff;padding:11px 16px;border-radius:9px;opacity:0;transform:translateY(15px);transition:.2s;font-size:13px}.toast.show{opacity:1;transform:none}@media(max-width:800px){.topbar{justify-content:center}.topbar span:nth-child(n+2),nav{display:none}header{height:66px;width:calc(100% - 28px)}.logo img{width:90px;height:50px}.cart{margin-left:auto}.hero,.experience,.party{width:calc(100% - 24px);grid-template-columns:1fr;margin:12px auto 54px}.hero-copy{padding:34px 24px}.hero h1{font-size:42px}.hero-photo{height:330px;margin:0 12px 12px}.section{width:calc(100% - 28px);margin-bottom:58px}.section-title{display:block}.section-title h2{font-size:34px}.products{grid-template-columns:1fr}.product-image{height:270px}.experience-photo,.party-photo{height:320px;margin:12px 12px 0}.experience-copy,.party-copy{padding:34px 24px}.experience h2,.party h2,.adventure h2{font-size:38px}.adventure{width:calc(100% - 28px);grid-template-columns:1fr;gap:22px;margin-bottom:58px}.adventure-grid img{height:240px}.adventure-grid img:nth-child(2){margin-top:18px}.story{width:calc(100% - 28px);grid-template-columns:1fr;text-align:center;gap:8px;margin-bottom:55px}.story img{margin:auto}.story h2{font-size:35px}.skill-grid{grid-template-columns:1fr 1fr}}
-/* FORMAS DECORATIVAS KITRINETA */
+/* FUNDO DECORATIVO KITRINETA */
 
 html {
   background:
+    /* azul esquerda */
     radial-gradient(
-      circle 180px at 0% 20%,
-      rgba(89, 183, 200, 0.18) 0%,
-      rgba(89, 183, 200, 0.18) 70%,
-      transparent 71%
+      circle 95px at 1% 24%,
+      rgba(89,183,200,.16) 0 68%,
+      transparent 69%
     ),
+
+    /* amarelo esquerda */
     radial-gradient(
-      circle 220px at 100% 70%,
-      rgba(244, 122, 61, 0.13) 0%,
-      rgba(244, 122, 61, 0.13) 70%,
-      transparent 71%
+      circle 45px at 7% 48%,
+      rgba(246,198,77,.17) 0 68%,
+      transparent 69%
     ),
+
+    /* laranja direita */
     radial-gradient(
-      circle 110px at 8% 90%,
-      rgba(246, 198, 77, 0.16) 0%,
-      rgba(246, 198, 77, 0.16) 70%,
-      transparent 71%
+      circle 85px at 99% 42%,
+      rgba(244,122,61,.12) 0 68%,
+      transparent 69%
     ),
+
+    /* azul direita mais abaixo */
+    radial-gradient(
+      circle 55px at 96% 72%,
+      rgba(89,183,200,.13) 0 68%,
+      transparent 69%
+    ),
+
+    /* amarelo inferior */
+    radial-gradient(
+      circle 70px at 3% 88%,
+      rgba(246,198,77,.13) 0 68%,
+      transparent 69%
+    ),
+
     #fff;
 }
 
