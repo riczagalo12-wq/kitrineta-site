@@ -98,3 +98,26 @@ main > section {
 footer p {
   font-family: 'Kidspace', 'Patrick Hand', cursive;
 }
+/* TESTE KIDSPACE - FORÇAR FONTE */
+
+@font-face {
+  font-family: "Kidspace";
+  src: url("./Kidspace.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+.hero h1,
+.hero h1 em,
+.section h2,
+.section-title h2,
+.experience h2,
+.adventure h2,
+.party h2,
+.story h2,
+.product-info h3,
+.product h3,
+footer p {
+  font-family: "Kidspace", cursive !important;
+  font-weight: 400 !important;
+}
