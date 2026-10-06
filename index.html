@@ -1,108 +1,14 @@
-<!doctype html>
-<html lang="pt">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Kitrineta — kits educativos para brincar, descobrir e crescer.">
-  <title>Kitrineta | Kits Educativos</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Patrick+Hand&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="topbar">
-    <span>🚚 Envios para todo o país</span>
-    <span>♡ Kits educativos que despertam a curiosidade</span>
-    <span>🔒 Pagamentos seguros</span>
-  </div>
-
-  <header>
-    <a class="brand" href="#"><span>ki</span><b>tri</b><i>neta</i><small>BRINCAR. DESCOBRIR. CRESCER</small></a>
-    <nav>
-      <a href="#">Início</a>
-      <a href="#kits">Kits Educativos</a>
-      <a href="#festas">Festas & Eventos</a>
-      <a href="#sobre">Sobre Nós</a>
-      <a href="#contactos">Contactos</a>
-    </nav>
-    <button class="cart" aria-label="Carrinho">🛒 <strong id="cartCount">0</strong></button>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">TEMPO PARA SER CRIANÇA</p>
-        <h1>Brincar é uma forma de <em>descobrir o mundo.</em></h1>
-        <p>Kits educativos e experiências criativas para crianças curiosas, felizes e confiantes.</p>
-        <div class="actions">
-          <a class="btn primary" href="#kits">Descobrir os Kits →</a>
-          <a class="btn secondary" href="#festas">Organizar uma Festa →</a>
-        </div>
-        <div class="mini-benefits"><span>🌿 Aprender a brincar</span><span>💡 Estimular a criatividade</span><span>♡ Criar memórias</span></div>
-      </div>
-      <div class="hero-art">
-        <div class="sun"></div>
-        <div class="blob"></div>
-        <div class="explorer">🔎</div>
-        <div class="dino">🦕</div>
-        <p>A tua fotografia Kitrineta<br>vai ficar aqui ✨</p>
-      </div>
-    </section>
-
-    <section id="kits" class="section">
-      <div class="section-title">
-        <div><span>DESCOBRE</span><h2>Os favoritos dos pequenos exploradores</h2></div>
-        <a href="#kits">Ver todos os kits →</a>
-      </div>
-
-      <div class="products">
-        <article class="product">
-          <div class="product-image dino-bg"><span class="age">☺ A partir dos 4 anos</span><div class="emoji">🦖</div><small>FOTOGRAFIA REAL DO KIT</small></div>
-          <div class="product-info"><div><h3>Kit Dinossauros</h3><p>Explora, descobre e aprende sobre o fascinante mundo dos dinossauros.</p></div><strong class="price">38,00 €</strong></div>
-          <div class="product-actions"><button class="outline">Ver detalhes</button><button class="add" data-product="Kit Dinossauros">🛒 Adicionar ao carrinho</button></div>
-        </article>
-
-        <article class="product">
-          <div class="product-image explorer-bg"><span class="age">☺ A partir dos 4 anos</span><div class="emoji">🧭</div><small>FOTOGRAFIA REAL DO KIT</small></div>
-          <div class="product-info"><div><h3>Kit Explorador</h3><p>Observa, investiga e descobre os segredos da natureza.</p></div><strong class="price">38,00 €</strong></div>
-          <div class="product-actions"><button class="outline">Ver detalhes</button><button class="add" data-product="Kit Explorador">🛒 Adicionar ao carrinho</button></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="benefits">
-      <div>🌱 <span><b>Educativos</b><small>Aprendizagem através do brincar</small></span></div>
-      <div>🔎 <span><b>Descoberta</b><small>Curiosidade e autonomia</small></span></div>
-      <div>🤲 <span><b>Autênticos</b><small>Materiais pensados com propósito</small></span></div>
-      <div>🎁 <span><b>Ideal para oferecer</b><small>Memórias que ficam</small></span></div>
-    </section>
-
-    <section id="sobre" class="skills">
-      <p class="eyebrow">APRENDIZAGEM</p>
-      <h2>Muito mais do que uma caixa de atividades</h2>
-      <p>Os Kits Kitrineta ajudam a desenvolver competências de forma divertida, natural e próxima do mundo real.</p>
-      <div class="skill-grid"><span>🧩 Coordenação</span><span>🧠 Desenvolvimento cognitivo</span><span>🎯 Concentração</span><span>🚀 Imaginação</span><span>💬 Linguagem</span><span>🙌 Autonomia</span><span>🧑‍🤝‍🧑 Competências sociais</span></div>
-    </section>
-
-    <section id="festas" class="party">
-      <div class="party-photo"><span>🎈</span><p>Fotografias reais das festas Kitrineta</p></div>
-      <div class="party-copy"><p class="eyebrow">MOMENTOS ESPECIAIS</p><h2>Também fazemos festas!</h2><h3>Tu imaginas a festa.<br>A Kitrineta ajuda a torná-la realidade.</h3><p>Atividades criativas, jogos, pinturas faciais, caça ao tesouro e muito mais para dias verdadeiramente especiais.</p><a class="btn party-btn" href="https://forms.gle/yMYP6FjbBEU2b4cC6" target="_blank" rel="noopener">Quero organizar uma festa →</a></div>
-    </section>
-
-    <section class="story">
-      <p class="eyebrow">A NOSSA HISTÓRIA</p><h2>Como surgiram os nossos Kits?</h2>
-      <p>Nasceram do desejo de transformar a educação em algo mais leve, mais afetivo e mais próximo do mundo real das crianças. Cada kit é uma porta aberta para a imaginação, onde a criança é protagonista da sua própria aventura.</p>
-    </section>
-  </main>
-
-  <footer id="contactos">
-    <div class="brand footer-brand"><span>ki</span><b>tri</b><i>neta</i><small>BRINCAR. DESCOBRIR. CRESCER</small></div>
-    <p>Descobrir ser criança.</p>
-    <p>© 2026 Kitrineta · Política de Privacidade · Termos e Condições</p>
-  </footer>
-
-  <div class="toast" id="toast">Adicionado ao carrinho ✓</div>
-  <script src="script.js"></script>
-</body>
-</html>
+<!doctype html><html lang="pt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Kitrineta — kits educativos para brincar, descobrir e crescer."><title>Kitrineta | Kits Educativos</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Patrick+Hand&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body>
+<div class="topbar"><span>🚚 Envios para todo o país</span><span>♡ Tempo para ser criança</span><span>🌿 Aprender a brincar</span></div>
+<header><a class="logo" href="#"><img src="images/logo.png" alt="Kitrineta"></a><nav><a href="#">Início</a><a href="#kits">Kits</a><a href="#descobrir">Descobrir</a><a href="#festas">Festas & Eventos</a><a href="#sobre">Sobre nós</a></nav><button class="cart">🛒 <strong id="cartCount">0</strong></button></header>
+<main>
+<section class="hero"><div class="hero-copy"><p class="eyebrow">TEMPO PARA SER CRIANÇA</p><h1>Pequenos exploradores.<br><em>Grandes descobertas.</em></h1><p>Kits educativos que transformam curiosidade em aventura — para brincar, descobrir e aprender longe dos ecrãs.</p><div class="actions"><a class="btn primary" href="#kits">Descobrir os Kits →</a><a class="btn secondary" href="#descobrir">Conhecer a Kitrineta</a></div><div class="mini-benefits"><span>+4 anos</span><span>Aprendizagem ativa</span><span>Experiências reais</span></div></div><div class="hero-photo"><img src="images/hero.jpg" alt="Crianças com um Kit Kitrineta"><div class="sticker">Descobrir<br>ser criança ✦</div></div></section>
+<section id="kits" class="section"><div class="section-title"><div><span>DESCOBRE</span><h2>Uma aventura dentro de cada caixa</h2></div><p>Conteúdos, materiais e atividades pensados para despertar a curiosidade.</p></div><div class="products">
+<article class="product"><div class="product-image"><img src="images/dinossauro.jpg" alt="Conteúdo do Kit Dinossauro"><span class="age">A partir dos 4 anos</span></div><div class="product-info"><div><p class="tag">PALEONTOLOGIA • CRIATIVIDADE</p><h3>Kit Dinossauro</h3><p>Viaja ao passado, investiga fósseis e entra no fascinante mundo dos dinossauros.</p></div><strong class="price">Preço a definir</strong></div><div class="product-actions"><button class="outline">Ver o Kit</button><button class="add" data-product="Kit Dinossauro">♡ Tenho interesse</button></div></article>
+<article class="product"><div class="product-image"><img src="images/explorador.jpg" alt="Conteúdo do Kit Explorador"><span class="age">A partir dos 4 anos</span></div><div class="product-info"><div><p class="tag">NATUREZA • DESCOBERTA</p><h3>Kit Explorador</h3><p>Binóculos, atividades e ferramentas para observar, investigar e descobrir a natureza.</p></div><strong class="price">Preço a definir</strong></div><div class="product-actions"><button class="outline">Ver o Kit</button><button class="add" data-product="Kit Explorador">♡ Tenho interesse</button></div></article>
+</div></section>
+<section id="descobrir" class="experience"><div class="experience-photo"><img src="images/lupa.jpg" alt="Criança a explorar a natureza com uma lupa"></div><div class="experience-copy"><p class="eyebrow">APRENDER FAZENDO</p><h2>O mundo é o melhor lugar para aprender.</h2><p>A Kitrineta convida as crianças a observar, experimentar, questionar e criar. Cada atividade foi pensada para transformar a aprendizagem numa experiência que se vive.</p><div class="skill-grid"><span>🧠 Cognição</span><span>🎯 Concentração</span><span>🚀 Imaginação</span><span>🙌 Autonomia</span><span>💬 Linguagem</span><span>🤝 Competências sociais</span></div></div></section>
+<section class="adventure"><div><p class="eyebrow">FORA DA CAIXA</p><h2>Menos ecrãs.<br>Mais mundo real.</h2><p>Explorar uma árvore, procurar pistas, observar ao longe ou registar uma descoberta. É assim que uma tarde se pode transformar numa aventura.</p></div><div class="adventure-grid"><img src="images/binoculos.jpg" alt="Criança a observar com binóculos"><img src="images/descoberta.jpg" alt="Crianças a investigar a natureza"></div></section>
+<section id="festas" class="party"><div class="party-photo"><img src="images/exploradoras.jpg" alt="Crianças exploradoras com binóculos"></div><div class="party-copy"><p class="eyebrow">MOMENTOS ESPECIAIS</p><h2>Também fazemos festas!</h2><h3>Experiências pensadas para crianças — e memórias para guardar.</h3><p>Jogos, criatividade, pinturas faciais, caça ao tesouro, atividades temáticas e muito mais.</p><a class="btn primary" href="https://forms.gle/yMYP6FjbBEU2b4cC6" target="_blank" rel="noopener">Planear uma festa →</a></div></section>
+<section id="sobre" class="story"><img src="images/logo.png" alt="Kitrineta"><div><p class="eyebrow">A NOSSA HISTÓRIA</p><h2>Nasceu para tornar a educação mais próxima do mundo real.</h2><p>Na Kitrineta acreditamos que aprender não tem de parecer uma obrigação. Criamos experiências que dão espaço à curiosidade, à autonomia e à imaginação — porque descobrir também é ser criança.</p></div></section>
+</main><footer><img src="images/logo.png" alt="Kitrineta"><p>Descobrir ser criança.</p><small>© 2026 Kitrineta · Política de Privacidade · Termos e Condições</small></footer><div class="toast" id="toast">Guardado ✓</div><script src="script.js"></script></body></html>
