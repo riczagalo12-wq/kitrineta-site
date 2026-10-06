@@ -44,3 +44,29 @@ html {
 body {
   background: transparent;
 }
+/* ONDA ORGÂNICA KITRINETA */
+
+main::before {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 150px;
+  right: -170px;
+  top: 720px;
+
+  background: rgba(89, 183, 200, 0.09);
+
+  border-radius:
+    55% 45% 65% 35%
+    / 60% 55% 45% 40%;
+
+  transform: rotate(-8deg);
+
+  pointer-events: none;
+  z-index: -1;
+}
+
+main {
+  position: relative;
+  z-index: 0;
+}
