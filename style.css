@@ -78,3 +78,23 @@ main > section {
   position: relative;
   z-index: 1;
 }
+/* FONTE OFICIAL KITRINETA */
+
+@font-face {
+  font-family: 'Kidspace';
+  src: url('Kidspace.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.hero h1,
+.section h2,
+.experience h2,
+.adventure h2,
+.party h2,
+.story h2,
+.product-info h3,
+footer p {
+  font-family: 'Kidspace', 'Patrick Hand', cursive;
+}
