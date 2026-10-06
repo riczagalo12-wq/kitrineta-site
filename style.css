@@ -190,3 +190,22 @@ main > section {
   pointer-events: none;
   z-index: -1;
 }
+/* LINK VER O KIT */
+.kit-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 13px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 900;
+  background: #fff;
+  border: 1px solid #d8d8d8;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.kit-link:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
