@@ -26,12 +26,16 @@
 
 <body>
 
+  <!-- BARRA SUPERIOR -->
+
   <div class="topbar">
     <span>🚚 Envios para todo o país</span>
     <span>♡ Tempo para ser criança</span>
     <span>🌿 Aprender a brincar</span>
   </div>
 
+
+  <!-- MENU -->
 
   <header>
 
@@ -101,7 +105,7 @@
         </p>
 
 
-        <!-- NOME DA CRIANÇA -->
+        <!-- PERSONALIZAÇÃO -->
 
         <div class="personalization">
 
@@ -126,24 +130,59 @@
         </div>
 
 
+        <!-- QUANTIDADE -->
+
+        <div class="quantity-area">
+
+          <label>
+            Quantidade
+          </label>
+
+          <div class="quantity-selector">
+
+            <button
+              type="button"
+              id="quantityMinus"
+              aria-label="Diminuir quantidade"
+            >
+              −
+            </button>
+
+            <span id="quantity">
+              1
+            </span>
+
+            <button
+              type="button"
+              id="quantityPlus"
+              aria-label="Aumentar quantidade"
+            >
+              +
+            </button>
+
+          </div>
+
+        </div>
+
+
         <!-- BENEFÍCIOS -->
 
         <div class="kit-benefits">
 
           <span>🌿 Explorar a natureza</span>
-
           <span>🔎 Observar e investigar</span>
-
           <span>🧠 Estimular a curiosidade</span>
-
           <span>🙌 Aprender fazendo</span>
 
         </div>
 
 
+        <!-- CARRINHO -->
+
         <button
           class="btn primary add"
           data-product="Kit Explorador"
+          id="addExplorerToCart"
         >
           Adicionar ao carrinho
         </button>
@@ -196,7 +235,7 @@
 
 
 
-    <!-- CONTEÚDO -->
+    <!-- CONTEÚDO DO KIT -->
 
     <section class="kit-inside">
 
@@ -232,7 +271,6 @@
           </span>
         </div>
 
-
         <div>
           🧭
           <strong>Bússola</strong>
@@ -241,7 +279,6 @@
           </span>
         </div>
 
-
         <div>
           🌿
           <strong>Atividades da natureza</strong>
@@ -249,7 +286,6 @@
             Desafios para observar cores, formas e texturas.
           </span>
         </div>
-
 
         <div>
           📖
@@ -277,7 +313,6 @@
         Enquanto explora, também cresce.
       </h2>
 
-
       <div class="skill-grid">
 
         <span>🧠 Cognição</span>
@@ -293,6 +328,8 @@
 
   </main>
 
+
+  <!-- RODAPÉ -->
 
   <footer>
 
@@ -321,6 +358,38 @@
 
 
   <script src="script.js"></script>
+
+
+  <!-- CONTROLO DA QUANTIDADE -->
+
+  <script>
+
+    const quantityMinus = document.getElementById("quantityMinus");
+    const quantityPlus = document.getElementById("quantityPlus");
+    const quantityDisplay = document.getElementById("quantity");
+
+    let quantity = 1;
+
+    quantityMinus.addEventListener("click", function () {
+
+      if (quantity > 1) {
+        quantity--;
+        quantityDisplay.textContent = quantity;
+      }
+
+    });
+
+
+    quantityPlus.addEventListener("click", function () {
+
+      if (quantity < 10) {
+        quantity++;
+        quantityDisplay.textContent = quantity;
+      }
+
+    });
+
+  </script>
 
 </body>
 
