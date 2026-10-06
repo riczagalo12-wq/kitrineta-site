@@ -2,49 +2,64 @@
 // KITRINETA — CARRINHO
 // ==========================================
 
+
+// LER CARRINHO
 function getCart() {
-  return JSON.parse(localStorage.getItem("kitrinetaCart")) || [];
+  try {
+    return JSON.parse(
+      localStorage.getItem("kitrinetaCart")
+    ) || [];
+  } catch (error) {
+    return [];
+  }
 }
 
+
+// GUARDAR CARRINHO
 function saveCart(cart) {
-  localStorage.setItem("kitrinetaCart", JSON.stringify(cart));
+
+  localStorage.setItem(
+    "kitrinetaCart",
+    JSON.stringify(cart)
+  );
+
   updateCartCount();
 }
 
 
-// ------------------------------------------
-// CONTADOR DO CARRINHO
-// ------------------------------------------
-
+// ATUALIZAR NÚMERO NO ÍCONE DO CARRINHO
 function updateCartCount() {
 
   const cart = getCart();
 
-  const total = cart.reduce(function(sum, item) {
-    return sum + item.quantity;
-  }, 0);
-
-  const counters = document.querySelectorAll(
-    "#cartCount, #cart-count"
+  const total = cart.reduce(
+    function(sum, item) {
+      return sum + Number(item.quantity || 1);
+    },
+    0
   );
 
-  counters.forEach(function(counter) {
-    counter.textContent = total;
-  });
+  document
+    .querySelectorAll("#cartCount, #cart-count")
+    .forEach(function(counter) {
+      counter.textContent = total;
+    });
 }
 
 
-// ------------------------------------------
-// MENSAGEM
-// ------------------------------------------
-
+// MOSTRAR MENSAGEM
 function showToast(message) {
 
-  const toast = document.getElementById("toast");
+  const toast =
+    document.getElementById("toast");
 
-  if (!toast) return;
+  if (!toast) {
+    alert(message);
+    return;
+  }
 
   toast.textContent = message;
+
   toast.classList.add("show");
 
   setTimeout(function() {
@@ -53,100 +68,130 @@ function showToast(message) {
 }
 
 
-// ------------------------------------------
 // ADICIONAR PRODUTO
-// ------------------------------------------
-
-function addProduct(productName, quantity, childName) {
+function addProduct(
+  productName,
+  quantity,
+  childName
+) {
 
   const cart = getCart();
 
-  const item = {
+  cart.push({
     product: productName,
-    quantity: quantity,
+    quantity: Number(quantity),
     childName: childName || ""
-  };
-
-  cart.push(item);
+  });
 
   saveCart(cart);
 
   showToast(
-    quantity === 1
-      ? "Kit adicionado ao carrinho!"
-      : quantity + " kits adicionados ao carrinho!"
+    "Adicionado ao carrinho! 🛒"
   );
 }
 
 
-// ------------------------------------------
-// BOTÕES ADICIONAR AO CARRINHO
-// ------------------------------------------
+// ESPERAR QUE A PÁGINA ESTEJA CARREGADA
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
 
-document.querySelectorAll(".add").forEach(function(button) {
+    updateCartCount();
 
-  button.addEventListener("click", function() {
 
-    const productName = button.dataset.product;
+    // TODOS OS BOTÕES "ADICIONAR"
+    const addButtons =
+      document.querySelectorAll(".add");
 
-    // Se estivermos na página individual
-    // do Kit Explorador
-    if (productName === "Kit Explorador" &&
-        document.getElementById("childName")) {
 
-      const childNameInput =
-        document.getElementById("childName");
+    addButtons.forEach(
+      function(button) {
 
-      const childName =
-        childNameInput.value.trim();
+        button.addEventListener(
+          "click",
+          function() {
 
-      // O nome é obrigatório
-      if (!childName) {
+            const productName =
+              button.dataset.product;
 
-        childNameInput.focus();
 
-        showToast(
-          "Indica primeiro o nome da criança."
+            if (!productName) {
+              return;
+            }
+
+
+            // -------------------------
+            // PÁGINA KIT EXPLORADOR
+            // -------------------------
+
+            if (
+              productName === "Kit Explorador" &&
+              document.getElementById("childName")
+            ) {
+
+              const childNameInput =
+                document.getElementById("childName");
+
+              const childName =
+                childNameInput.value.trim();
+
+
+              // NOME OBRIGATÓRIO
+              if (!childName) {
+
+                childNameInput.focus();
+
+                showToast(
+                  "Escreve primeiro o nome da criança."
+                );
+
+                return;
+              }
+
+
+              // QUANTIDADE
+              const quantityElement =
+                document.getElementById("quantity");
+
+              let quantity = 1;
+
+
+              if (quantityElement) {
+
+                quantity =
+                  parseInt(
+                    quantityElement.textContent,
+                    10
+                  ) || 1;
+
+              }
+
+
+              addProduct(
+                productName,
+                quantity,
+                childName
+              );
+
+              return;
+            }
+
+
+            // -------------------------
+            // RESTANTES PRODUTOS
+            // -------------------------
+
+            addProduct(
+              productName,
+              1,
+              ""
+            );
+
+          }
         );
 
-        return;
       }
-
-
-      // Quantidade escolhida
-      const quantityElement =
-        document.getElementById("quantity");
-
-      const quantity =
-        quantityElement
-          ? parseInt(quantityElement.textContent)
-          : 1;
-
-
-      addProduct(
-        productName,
-        quantity,
-        childName
-      );
-
-      return;
-    }
-
-
-    // Outros botões do site
-    addProduct(
-      productName,
-      1,
-      ""
     );
 
-  });
-
-});
-
-
-// ------------------------------------------
-// INICIAR CONTADOR
-// ------------------------------------------
-
-updateCartCount();
+  }
+);
