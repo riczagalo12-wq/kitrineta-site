@@ -127,7 +127,17 @@ footer p {
   font-weight: normal;
   font-style: normal;
 }
-
-.hero h1 {
+.hero h1,
+.hero h1 em,
+.section h2,
+.section-title h2,
+.experience h2,
+.adventure h2,
+.party h2,
+.story h2,
+.product-info h3,
+.product h3,
+footer p {
   font-family: 'KidspaceWeb' !important;
+  font-weight: normal !important;
 }
