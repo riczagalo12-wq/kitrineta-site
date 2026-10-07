@@ -164,6 +164,7 @@
     </a>
 
     <nav>
+
       <a href="index.html">
         Início
       </a>
@@ -179,6 +180,7 @@
       >
         Festas & Eventos
       </a>
+
     </nav>
 
     <a
@@ -251,6 +253,7 @@
     >
 
       <div>
+
         <span>
           Kits no carrinho
         </span>
@@ -258,7 +261,9 @@
         <span id="cartTotalQuantity">
           0
         </span>
+
       </div>
+
 
       <div class="cart-summary-note">
 
@@ -473,9 +478,11 @@
 
 
   <footer>
+
     <p>
       Kitrineta — Descobrir ser criança
     </p>
+
   </footer>
 
 
@@ -553,7 +560,9 @@
     function getProductImage(product) {
 
       if (product === "Kit Dinossauro") {
+
         return "images/kitdinossauro.png";
+
       }
 
       return "images/kitexplorador.png";
@@ -566,46 +575,70 @@
       const total =
         cart.reduce(
           function(sum, item) {
-            return sum + Number(item.quantity || 1);
+
+            return sum +
+              Number(
+                item.quantity || 1
+              );
+
           },
           0
         );
 
 
       const counter =
-        document.getElementById("cartCount");
+        document.getElementById(
+          "cartCount"
+        );
 
 
       if (counter) {
-        counter.textContent = total;
+
+        counter.textContent =
+          total;
+
       }
 
     }
 
 
-    function changeQuantity(index, amount) {
+    function changeQuantity(
+      index,
+      amount
+    ) {
 
-      const cart = getCart();
+      const cart =
+        getCart();
+
 
       if (!cart[index]) {
+
         return;
+
       }
 
 
       let quantity =
-        Number(cart[index].quantity || 1);
+        Number(
+          cart[index].quantity || 1
+        );
 
 
-      quantity += amount;
+      quantity +=
+        amount;
 
 
       if (quantity < 1) {
+
         quantity = 1;
+
       }
 
 
       if (quantity > 10) {
+
         quantity = 10;
+
       }
 
 
@@ -620,12 +653,15 @@
 
     function removeItem(index) {
 
-      const cart = getCart();
+      const cart =
+        getCart();
+
 
       cart.splice(
         index,
         1
       );
+
 
       saveCart(cart);
 
@@ -639,36 +675,51 @@
 
 
       const itemsContainer =
-        document.getElementById("cartItems");
+        document.getElementById(
+          "cartItems"
+        );
 
 
       const emptyCart =
-        document.getElementById("emptyCart");
+        document.getElementById(
+          "emptyCart"
+        );
 
 
       const summary =
-        document.getElementById("cartSummary");
+        document.getElementById(
+          "cartSummary"
+        );
 
 
       const deliveryBox =
-        document.getElementById("deliveryBox");
+        document.getElementById(
+          "deliveryBox"
+        );
 
 
-      updateHeaderCount(cart);
+      updateHeaderCount(
+        cart
+      );
 
 
       if (!cart.length) {
 
-        itemsContainer.innerHTML = "";
+        itemsContainer.innerHTML =
+          "";
+
 
         emptyCart.style.display =
           "block";
 
+
         summary.style.display =
           "none";
 
+
         deliveryBox.style.display =
           "none";
+
 
         return;
 
@@ -678,16 +729,21 @@
       emptyCart.style.display =
         "none";
 
+
       summary.style.display =
         "block";
+
 
       deliveryBox.style.display =
         "block";
 
 
-      let subtotal = 0;
+      let subtotal =
+        0;
 
-      let totalQuantity = 0;
+
+      let totalQuantity =
+        0;
 
 
       itemsContainer.innerHTML =
@@ -695,7 +751,9 @@
           function(item, index) {
 
             const quantity =
-              Number(item.quantity || 1);
+              Number(
+                item.quantity || 1
+              );
 
 
             const price =
@@ -705,7 +763,8 @@
 
 
             const lineTotal =
-              price * quantity;
+              price *
+              quantity;
 
 
             subtotal +=
@@ -821,25 +880,46 @@
       document.getElementById(
         "cartSubtotal"
       ).textContent =
-        money(subtotal);
+        money(
+          subtotal
+        );
 
 
       document.getElementById(
         "cartTotal"
       ).textContent =
-        money(subtotal);
+        money(
+          subtotal
+        );
 
     }
 
 
     function escapeHtml(value) {
 
-      return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+      return String(
+        value || ""
+      )
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
 
     }
 
@@ -896,10 +976,14 @@
           return {
 
             id:
-              PRODUCT_IDS[item.product],
+              PRODUCT_IDS[
+                item.product
+              ],
 
             quantity:
-              Number(item.quantity || 1),
+              Number(
+                item.quantity || 1
+              ),
 
             childName:
               item.childName || ""
@@ -922,7 +1006,8 @@
           CREATE_ORDER_URL,
           {
 
-            method: "POST",
+            method:
+              "POST",
 
             headers: {
               "Content-Type":
@@ -933,7 +1018,9 @@
               JSON.stringify({
 
                 items:
-                  prepareOrderItems(cart),
+                  prepareOrderItems(
+                    cart
+                  ),
 
                 customer:
                   customer
@@ -944,8 +1031,25 @@
         );
 
 
-      const result =
-        await response.json();
+      const responseText =
+        await response.text();
+
+
+      let result;
+
+
+      try {
+
+        result =
+          JSON.parse(
+            responseText
+          );
+
+      } catch (error) {
+
+        result = {};
+
+      }
 
 
       if (
@@ -971,6 +1075,12 @@
       order
     ) {
 
+      /*
+        POR ENQUANTO O CHECKOUT
+        ESTÁ PREPARADO PARA
+        O KIT EXPLORADOR.
+      */
+
       if (
         !order.items ||
         order.items.length !== 1 ||
@@ -989,12 +1099,19 @@
         order.items[0];
 
 
+      /*
+        ENVIAMOS A MESMA
+        REFERÊNCIA KIT-...
+        PARA A EASYPAY.
+      */
+
       const response =
         await fetch(
           CREATE_CHECKOUT_URL,
           {
 
-            method: "POST",
+            method:
+              "POST",
 
             headers: {
               "Content-Type":
@@ -1015,13 +1132,6 @@
           }
         );
 
-
-      /*
-        LEMOS PRIMEIRO COMO TEXTO.
-
-        ASSIM CONSEGUIMOS VER TAMBÉM
-        UM ERRO QUE NÃO VENHA EM JSON.
-      */
 
       const responseText =
         await response.text();
@@ -1048,10 +1158,8 @@
 
 
       /*
-        DIAGNÓSTICO TEMPORÁRIO.
-
-        SE A EASYPAY REJEITAR O PEDIDO,
-        MOSTRAMOS O DETALHE NO ECRÃ.
+        MANTEMOS O DIAGNÓSTICO
+        CASO A API REJEITE ALGO.
       */
 
       if (
@@ -1064,7 +1172,9 @@
           "Não foi possível iniciar o pagamento.";
 
 
-        if (result.message) {
+        if (
+          result.message
+        ) {
 
           errorDetail +=
             " " +
@@ -1073,7 +1183,9 @@
         }
 
 
-        if (result.error) {
+        if (
+          result.error
+        ) {
 
           errorDetail +=
             " " +
@@ -1129,7 +1241,9 @@
         "Encomenda " +
         order.id +
         " · " +
-        money(order.total) +
+        money(
+          order.total
+        ) +
         " · Portes grátis";
 
 
@@ -1163,12 +1277,21 @@
     }
 
 
+    /*
+      CHECKOUT EASYPAY
+
+      IMPORTANTE:
+      O OBJETO DO SDK É
+      easypayCheckout
+      COM "e" MINÚSCULO.
+    */
+
     function startEasypay(
       manifest
     ) {
 
       if (
-        typeof EasypayCheckout ===
+        typeof easypayCheckout ===
         "undefined"
       ) {
 
@@ -1181,10 +1304,11 @@
 
       document.getElementById(
         "easypayCheckout"
-      ).innerHTML = "";
+      ).innerHTML =
+        "";
 
 
-      EasypayCheckout.startCheckout(
+      easypayCheckout.startCheckout(
         manifest,
         {
 
@@ -1194,9 +1318,29 @@
           testing:
             true,
 
+          language:
+            "pt_PT",
+
+          display:
+            "inline",
+
 
           onSuccess:
-            function() {
+            function(checkoutInfo) {
+
+              console.log(
+                "Checkout concluído:",
+                checkoutInfo
+              );
+
+
+              /*
+                NÃO MARCAMOS A
+                ENCOMENDA COMO PAGA AQUI.
+
+                A CONFIRMAÇÃO REAL
+                SERÁ FEITA PELO WEBHOOK.
+              */
 
               showMessage(
                 "Pagamento submetido. A confirmação será processada automaticamente.",
@@ -1216,7 +1360,24 @@
 
 
               showMessage(
-                "Não foi possível concluir o pagamento.",
+                "Não foi possível concluir o pagamento. Podes tentar novamente.",
+                true
+              );
+
+          },
+
+
+          onPaymentError:
+            function(error) {
+
+              console.error(
+                "Erro de pagamento Easypay:",
+                error
+              );
+
+
+              showMessage(
+                "O pagamento não foi concluído. Podes tentar novamente.",
                 true
               );
 
@@ -1313,7 +1474,8 @@
 
 
               /*
-                1 — CRIAR ENCOMENDA
+                1 — CRIAR E GUARDAR
+                A ENCOMENDA
               */
 
               const order =
@@ -1325,13 +1487,17 @@
 
               sessionStorage.setItem(
                 "kitrinetaCustomer",
-                JSON.stringify(customer)
+                JSON.stringify(
+                  customer
+                )
               );
 
 
               sessionStorage.setItem(
                 "kitrinetaOrder",
-                JSON.stringify(order)
+                JSON.stringify(
+                  order
+                )
               );
 
 
@@ -1341,8 +1507,8 @@
 
 
               /*
-                2 — CRIAR PAGAMENTO
-                COM A MESMA REFERÊNCIA
+                2 — CRIAR O CHECKOUT
+                COM A MESMA KIT-...
               */
 
               const manifest =
@@ -1352,7 +1518,8 @@
 
 
               /*
-                3 — ABRIR EASYPAY
+                3 — ABRIR O CHECKOUT
+                EASYPAY
               */
 
               startEasypay(
