@@ -265,7 +265,7 @@
             <div class="checkout-field">
 
               <label for="customerAddress">
-                Morada *
+                Morada de entrega *
               </label>
 
               <input
@@ -358,7 +358,7 @@
 
 
 
-      <!-- PAGAMENTO EASYPAY -->
+      <!-- PAGAMENTO -->
 
       <div
         id="checkoutArea"
@@ -431,7 +431,7 @@
 
 
 
-  <!-- SDK EASYPAY -->
+  <!-- EASYPAY -->
 
   <script
     src="https://cdn.easypay.pt/checkout/2.9.1/">
@@ -685,7 +685,6 @@
       emptyCart.style.display =
         "none";
 
-
       cartSummary.style.display =
         "block";
 
@@ -790,33 +789,19 @@
 
                 <button
                   type="button"
-                  onclick="
-                    changeQuantity(
-                      ${index},
-                      -1
-                    )
-                  "
-                  aria-label="Diminuir quantidade"
-                >
+                  onclick="changeQuantity(${index}, -1)"
+                  aria-label="Diminuir quantidade">
                   −
                 </button>
-
 
                 <span>
                   ${item.quantity}
                 </span>
 
-
                 <button
                   type="button"
-                  onclick="
-                    changeQuantity(
-                      ${index},
-                      1
-                    )
-                  "
-                  aria-label="Aumentar quantidade"
-                >
+                  onclick="changeQuantity(${index}, 1)"
+                  aria-label="Aumentar quantidade">
                   +
                 </button>
 
@@ -826,12 +811,7 @@
               <button
                 class="remove-item"
                 type="button"
-                onclick="
-                  removeItem(
-                    ${index}
-                  )
-                "
-              >
+                onclick="removeItem(${index})">
                 Remover
               </button>
 
@@ -964,7 +944,8 @@
 
             return {
 
-              id: id,
+              id:
+                id,
 
               quantity:
                 Number(
@@ -986,7 +967,23 @@
 
 
 
-    async function createOrder(cart) {
+    /*
+      CRIAR E GUARDAR A ENCOMENDA
+
+      Agora enviamos:
+      - produtos
+      - quantidades
+      - personalização
+      - dados de entrega
+
+      A função Netlify valida os preços
+      e guarda a encomenda no Blobs.
+    */
+
+    async function createOrder(
+      cart,
+      customer
+    ) {
 
       const items =
         buildOrderItems(
@@ -999,7 +996,8 @@
           CREATE_ORDER_URL,
           {
 
-            method: "POST",
+            method:
+              "POST",
 
             headers: {
 
@@ -1010,15 +1008,36 @@
 
             body:
               JSON.stringify({
-                items: items
+
+                items:
+                  items,
+
+                customer:
+                  customer
+
               })
 
           }
         );
 
 
-      const result =
-        await response.json();
+      let result;
+
+
+      try {
+
+        result =
+          await response.json();
+
+      }
+
+      catch (error) {
+
+        throw new Error(
+          "O servidor devolveu uma resposta inválida."
+        );
+
+      }
 
 
       if (
@@ -1028,7 +1047,8 @@
       ) {
 
         throw new Error(
-          "Não foi possível validar a encomenda."
+          result.message ||
+          "Não foi possível criar a encomenda."
         );
 
       }
@@ -1045,11 +1065,11 @@
     ) {
 
       /*
-        A função create-checkout atual
-        está preparada para o Kit Explorador.
+        Por enquanto o checkout Easypay
+        está preparado para o Kit Explorador.
 
-        Nesta fase usamos a quantidade
-        validada pelo servidor.
+        Vamos alargar ao Dinossauro
+        numa etapa seguinte.
       */
 
       const explorer =
@@ -1068,7 +1088,7 @@
       if (!explorer) {
 
         throw new Error(
-          "Neste teste o checkout está preparado para o Kit Explorador."
+          "Neste teste o pagamento está preparado para o Kit Explorador."
         );
 
       }
@@ -1090,7 +1110,8 @@
           CREATE_CHECKOUT_URL,
           {
 
-            method: "POST",
+            method:
+              "POST",
 
             headers: {
 
@@ -1111,8 +1132,23 @@
         );
 
 
-      const result =
-        await response.json();
+      let result;
+
+
+      try {
+
+        result =
+          await response.json();
+
+      }
+
+      catch (error) {
+
+        throw new Error(
+          "A Easypay devolveu uma resposta inválida."
+        );
+
+      }
 
 
       if (
@@ -1193,6 +1229,10 @@
         );
 
 
+      /*
+        DADOS DE ENTREGA
+      */
+
       const customer = {
 
         name:
@@ -1255,12 +1295,10 @@
 
 
       /*
-        Por enquanto os dados de entrega
-        continuam apenas nesta sessão
-        do navegador.
-
-        Não são enviados para a função
-        create-order nesta fase.
+        Mantemos também temporariamente
+        os dados nesta sessão para podermos
+        criar posteriormente uma página
+        de confirmação.
       */
 
       sessionStorage.setItem(
@@ -1276,7 +1314,7 @@
 
 
       button.textContent =
-        "A validar encomenda...";
+        "A criar encomenda...";
 
 
       message.style.display =
@@ -1284,26 +1322,22 @@
 
 
       message.textContent =
-        "A validar produtos e total...";
+        "A validar e guardar a tua encomenda...";
 
 
       try {
 
         /*
-          1 — O servidor valida
-          produtos, quantidades e preços.
+          1.
+          ENVIAR PRODUTOS + ENTREGA
+          PARA O SERVIDOR.
         */
 
         const order =
           await createOrder(
-            cart
+            cart,
+            customer
           );
-
-
-        console.log(
-          "Encomenda validada:",
-          order
-        );
 
 
         sessionStorage.setItem(
@@ -1314,25 +1348,26 @@
         );
 
 
+        console.log(
+          "Encomenda criada:",
+          order
+        );
+
+
         message.textContent =
-          "Encomenda validada. A preparar pagamento...";
+          "Encomenda criada. A preparar o pagamento...";
 
 
         /*
-          2 — Só depois criamos
-          o checkout Easypay.
+          2.
+          SÓ DEPOIS ABRIMOS
+          O PAGAMENTO EASYPAY.
         */
 
         const manifest =
           await createEasypayCheckout(
             order
           );
-
-
-        console.log(
-          "Manifest Easypay:",
-          manifest
-        );
 
 
         if (
@@ -1356,9 +1391,13 @@
 
         orderReference.innerHTML =
           "Encomenda <strong>" +
-          escapeHTML(order.id) +
+          escapeHTML(
+            order.id
+          ) +
           "</strong> · " +
-          formatPrice(order.total) +
+          formatPrice(
+            order.total
+          ) +
           " · Portes grátis";
 
 
@@ -1391,17 +1430,30 @@
                 function(checkoutInfo) {
 
                   console.log(
-                    "Pagamento concluído:",
+                    "Easypay:",
                     checkoutInfo
                   );
 
+
+                  /*
+                    IMPORTANTE:
+
+                    Este sucesso no navegador
+                    ainda NÃO será usado como
+                    confirmação definitiva
+                    de pagamento.
+
+                    Mais tarde o webhook
+                    da Easypay atualizará
+                    a encomenda para "paid".
+                  */
 
                   message.style.display =
                     "block";
 
 
                   message.textContent =
-                    "✅ Pagamento de teste concluído com sucesso.";
+                    "✅ Pagamento de teste processado. A confirmação definitiva será feita pelo sistema de pagamentos.";
 
                 },
 
@@ -1439,7 +1491,7 @@
 
 
                   message.textContent =
-                    "O checkout encontrou um erro. Vamos verificar.";
+                    "O checkout encontrou um erro. Tenta novamente.";
 
                 }
 
