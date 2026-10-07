@@ -133,6 +133,7 @@
       font-size: 12px;
       font-weight: 800;
       line-height: 1.5;
+      word-break: break-word;
     }
 
     @media (max-width: 650px) {
@@ -258,7 +259,6 @@
           0
         </span>
       </div>
-
 
       <div class="cart-summary-note">
 
@@ -473,11 +473,9 @@
 
 
   <footer>
-
     <p>
       Kitrineta — Descobrir ser criança
     </p>
-
   </footer>
 
 
@@ -973,12 +971,6 @@
       order
     ) {
 
-      /*
-        NESTA FASE O PAGAMENTO
-        ESTÁ PREPARADO APENAS
-        PARA O KIT EXPLORADOR.
-      */
-
       if (
         !order.items ||
         order.items.length !== 1 ||
@@ -996,14 +988,6 @@
       const explorer =
         order.items[0];
 
-
-      /*
-        A ALTERAÇÃO IMPORTANTE:
-
-        Enviamos agora para a Easypay
-        a MESMA referência KIT-...
-        criada pelo create-order.
-      */
 
       const response =
         await fetch(
@@ -1032,9 +1016,43 @@
         );
 
 
-      const result =
-        await response.json();
+      /*
+        LEMOS PRIMEIRO COMO TEXTO.
 
+        ASSIM CONSEGUIMOS VER TAMBÉM
+        UM ERRO QUE NÃO VENHA EM JSON.
+      */
+
+      const responseText =
+        await response.text();
+
+
+      let result;
+
+
+      try {
+
+        result =
+          JSON.parse(
+            responseText
+          );
+
+      } catch (error) {
+
+        result = {
+          raw:
+            responseText
+        };
+
+      }
+
+
+      /*
+        DIAGNÓSTICO TEMPORÁRIO.
+
+        SE A EASYPAY REJEITAR O PEDIDO,
+        MOSTRAMOS O DETALHE NO ECRÃ.
+      */
 
       if (
         !response.ok ||
@@ -1042,8 +1060,51 @@
         !result.manifest
       ) {
 
+        let errorDetail =
+          "Não foi possível iniciar o pagamento.";
+
+
+        if (result.message) {
+
+          errorDetail +=
+            " " +
+            result.message;
+
+        }
+
+
+        if (result.error) {
+
+          errorDetail +=
+            " " +
+            JSON.stringify(
+              result.error
+            );
+
+        }
+
+
+        if (
+          result.raw &&
+          !result.message &&
+          !result.error
+        ) {
+
+          errorDetail +=
+            " Resposta: " +
+            result.raw;
+
+        }
+
+
+        errorDetail +=
+          " [HTTP " +
+          response.status +
+          "]";
+
+
         throw new Error(
-          "Não foi possível iniciar o pagamento."
+          errorDetail
         );
 
       }
@@ -1126,43 +1187,41 @@
       EasypayCheckout.startCheckout(
         manifest,
         {
+
           id:
             "easypayCheckout",
 
           testing:
             true,
 
+
           onSuccess:
             function() {
-
-              /*
-                IMPORTANTE:
-
-                Isto NÃO significa que
-                vamos marcar a encomenda
-                como paga.
-
-                A confirmação real será
-                feita pelo webhook
-                da Easypay.
-              */
 
               showMessage(
                 "Pagamento submetido. A confirmação será processada automaticamente.",
                 false
               );
 
-            },
+          },
+
 
           onError:
-            function() {
+            function(error) {
+
+              console.error(
+                "Erro checkout Easypay:",
+                error
+              );
+
 
               showMessage(
-                "Não foi possível concluir o pagamento. Podes tentar novamente.",
+                "Não foi possível concluir o pagamento.",
                 true
               );
 
-            },
+          },
+
 
           onClose:
             function() {
@@ -1172,7 +1231,8 @@
                 false
               );
 
-            }
+          }
+
         }
       );
 
@@ -1253,8 +1313,7 @@
 
 
               /*
-                1 — CRIAR E GUARDAR
-                A ENCOMENDA
+                1 — CRIAR ENCOMENDA
               */
 
               const order =
@@ -1282,9 +1341,8 @@
 
 
               /*
-                2 — CRIAR CHECKOUT
-                USANDO A MESMA
-                REFERÊNCIA KIT-...
+                2 — CRIAR PAGAMENTO
+                COM A MESMA REFERÊNCIA
               */
 
               const manifest =
