@@ -1,409 +1,471 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Carrinho | Kitrineta</title>
 
-  <meta
-    name="description"
-    content="Carrinho de compras Kitrineta."
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
   >
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
 
   <link
     href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <script
+    src="https://cdn.easypay.pt/checkout/2.9.1/"
+  ></script>
+
+  <style>
+    .delivery-box {
+      width: min(620px, 100%);
+      margin: 32px 0 0 auto;
+      padding: 25px;
+      background: #fff;
+      border: 1px solid #eceae5;
+      border-radius: 20px;
+      box-shadow: 0 8px 28px rgba(49,70,75,.06);
+    }
+
+    .delivery-box h2 {
+      font-family: 'KidspaceWeb', 'Kidspace', cursive;
+      font-weight: normal;
+      color: var(--olive);
+      font-size: 34px;
+      margin: 0 0 7px;
+    }
+
+    .delivery-intro {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .delivery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .delivery-field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .delivery-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .delivery-field label {
+      color: var(--olive);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .delivery-field input {
+      width: 100%;
+      height: 47px;
+      padding: 0 14px;
+      border: 1.5px solid #ddd8cf;
+      border-radius: 10px;
+      background: #fff;
+      font-family: Nunito, Arial, sans-serif;
+      font-size: 13px;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .delivery-field input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(89,183,200,.12);
+    }
+
+    .delivery-note {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .order-reference {
+      display: none;
+      margin-top: 20px;
+      padding: 14px 16px;
+      background: var(--cream);
+      border-radius: 12px;
+      color: var(--olive);
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.6;
+    }
+
+    .order-reference.show {
+      display: block;
+    }
+
+    #easypayCheckout {
+      margin-top: 25px;
+    }
+
+    .checkout-message {
+      margin-top: 15px;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 650px) {
+      .delivery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .delivery-field.full {
+        grid-column: auto;
+      }
+    }
+  </style>
 </head>
+
 
 <body>
 
-  <div class="topbar">
-    <span>🚚 Portes grátis</span>
-    <span>♡ Tempo para ser criança</span>
-    <span>🌿 Aprender a brincar</span>
-  </div>
-
-
   <header>
 
-    <a class="logo" href="index.html">
-      <img src="images/logo.png" alt="Kitrineta">
+    <a
+      class="brand"
+      href="index.html"
+    >
+      <img
+        src="images/logo.png"
+        alt="Kitrineta"
+      >
     </a>
 
     <nav>
-      <a href="index.html">Início</a>
-      <a href="kits.html">Kits</a>
-      <a href="index.html#descobrir">Descobrir</a>
-      <a href="index.html#festas">Festas & Eventos</a>
-      <a href="index.html#sobre">Sobre nós</a>
+      <a href="index.html">
+        Início
+      </a>
+
+      <a href="kits.html">
+        Kits
+      </a>
+
+      <a
+        href="https://forms.gle/yMYP6FjbBEU2b4cC6"
+        target="_blank"
+        rel="noopener"
+      >
+        Festas & Eventos
+      </a>
     </nav>
 
-    <a class="cart" href="carrinho.html">
-      🛒 <strong id="cartCount">0</strong>
+    <a
+      class="cart"
+      href="carrinho.html"
+    >
+      🛒
+      <strong id="cartCount">
+        0
+      </strong>
     </a>
 
   </header>
 
 
-  <main>
+  <main class="cart-page">
 
-    <section class="cart-page">
+    <div class="cart-heading">
 
-      <div class="cart-heading">
+      <p class="eyebrow">
+        A TUA AVENTURA
+      </p>
 
-        <p class="eyebrow">
-          A TUA ENCOMENDA
-        </p>
+      <h1>
+        O teu carrinho
+      </h1>
 
-        <h1>O teu carrinho</h1>
+      <p>
+        Confirma os teus kits antes de continuares.
+      </p>
+
+    </div>
+
+
+    <div id="cartItems"></div>
+
+
+    <div
+      id="emptyCart"
+      class="empty-cart"
+      style="display:none;"
+    >
+
+      <div class="empty-cart-icon">
+        🛒
+      </div>
+
+      <h2>
+        O carrinho está vazio
+      </h2>
+
+      <p>
+        Escolhe uma aventura Kitrineta para começar.
+      </p>
+
+      <a
+        href="kits.html"
+        class="btn primary"
+      >
+        Descobrir os Kits
+      </a>
+
+    </div>
+
+
+    <section
+      id="cartSummary"
+      class="cart-summary"
+      style="display:none;"
+    >
+
+      <div>
+        <span>
+          Kits no carrinho
+        </span>
+
+        <span id="cartTotalQuantity">
+          0
+        </span>
+      </div>
+
+
+      <div class="cart-summary-note">
 
         <p>
-          Confirma os teus kits antes de continuares.
-        </p>
-
-      </div>
-
-
-      <div
-        class="cart-items"
-        id="cartItems">
-      </div>
-
-
-      <div
-        class="empty-cart"
-        id="emptyCart">
-
-        <div class="empty-cart-icon">
-          🛒
-        </div>
-
-        <h2>
-          O teu carrinho está vazio.
-        </h2>
-
-        <p>
-          Há muitas aventuras à espera
-          de pequenos exploradores.
-        </p>
-
-        <a
-          class="btn primary"
-          href="kits.html">
-          Descobrir os Kits →
-        </a>
-
-      </div>
-
-
-      <div
-        class="cart-summary"
-        id="cartSummary">
-
-        <div>
-          <span>Produtos</span>
-
-          <strong id="cartTotalQuantity">
-            0
-          </strong>
-        </div>
-
-
-        <div class="cart-money-row">
-          <span>Subtotal</span>
-
+          Subtotal:
           <strong id="cartSubtotal">
             0,00 €
           </strong>
-        </div>
+        </p>
 
-
-        <div class="cart-money-row">
-          <span>Envio</span>
-
+        <p>
+          Envio:
           <strong>
             Grátis
           </strong>
-        </div>
+        </p>
 
-
-        <div class="cart-total-row">
-          <span>Total</span>
-
+        <p>
+          Total:
           <strong id="cartTotal">
             0,00 €
           </strong>
+        </p>
+
+        <p>
+          Portes gratuitos para Portugal Continental.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <section
+      id="deliveryBox"
+      class="delivery-box"
+      style="display:none;"
+    >
+
+      <h2>
+        Dados de entrega
+      </h2>
+
+      <p class="delivery-intro">
+        Indica onde queres receber a tua Kitrineta.
+        Os dados do pagamento podem ser diferentes
+        dos dados de entrega.
+      </p>
+
+
+      <form id="deliveryForm">
+
+        <div class="delivery-grid">
+
+          <div class="delivery-field full">
+
+            <label for="customerName">
+              Nome completo *
+            </label>
+
+            <input
+              id="customerName"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+            >
+
+          </div>
+
+
+          <div class="delivery-field">
+
+            <label for="customerEmail">
+              Email *
+            </label>
+
+            <input
+              id="customerEmail"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            >
+
+          </div>
+
+
+          <div class="delivery-field">
+
+            <label for="customerPhone">
+              Telemóvel *
+            </label>
+
+            <input
+              id="customerPhone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              required
+            >
+
+          </div>
+
+
+          <div class="delivery-field full">
+
+            <label for="customerAddress">
+              Morada *
+            </label>
+
+            <input
+              id="customerAddress"
+              name="address"
+              type="text"
+              autocomplete="street-address"
+              required
+            >
+
+          </div>
+
+
+          <div class="delivery-field">
+
+            <label for="customerPostalCode">
+              Código postal *
+            </label>
+
+            <input
+              id="customerPostalCode"
+              name="postalCode"
+              type="text"
+              placeholder="0000-000"
+              pattern="[0-9]{4}-[0-9]{3}"
+              autocomplete="postal-code"
+              required
+            >
+
+          </div>
+
+
+          <div class="delivery-field">
+
+            <label for="customerCity">
+              Localidade *
+            </label>
+
+            <input
+              id="customerCity"
+              name="city"
+              type="text"
+              autocomplete="address-level2"
+              required
+            >
+
+          </div>
+
+
+          <div class="delivery-field full">
+
+            <label for="customerNif">
+              NIF
+            </label>
+
+            <input
+              id="customerNif"
+              name="nif"
+              type="text"
+              inputmode="numeric"
+              maxlength="9"
+              placeholder="Opcional"
+            >
+
+          </div>
+
         </div>
 
 
-        <p class="cart-shipping-note">
-          Portes gratuitos para Portugal Continental.
+        <p class="delivery-note">
+          * Campos obrigatórios.
         </p>
 
 
         <button
-          class="btn primary checkout-button"
           id="checkoutButton"
-          type="button">
-          Continuar →
+          class="btn primary checkout-button"
+          type="submit"
+        >
+          Ir para pagamento
         </button>
 
-      </div>
+      </form>
 
-
-
-      <!-- DADOS DE ENTREGA -->
 
       <div
-        id="deliveryArea"
-        style="
-          display:none;
-          margin-top:45px;
-        "
-      >
+        id="orderReference"
+        class="order-reference"
+      ></div>
 
-        <div
-          style="
-            max-width:700px;
-            margin:0 auto;
-          "
-        >
-
-          <p class="eyebrow">
-            ENTREGA
-          </p>
-
-          <h2
-            style="
-              font-family:'KidspaceWeb','Kidspace',cursive;
-              font-weight:normal;
-              font-size:42px;
-              color:var(--olive);
-              margin:5px 0 8px;
-            "
-          >
-            Para onde vai a aventura?
-          </h2>
-
-          <p
-            style="
-              color:var(--muted);
-              font-size:13px;
-              margin-bottom:25px;
-            "
-          >
-            Preenche os dados para receberes
-            a tua encomenda.
-          </p>
-
-
-          <form
-            id="deliveryForm"
-            style="
-              background:var(--cream);
-              border:1px solid #f0e9df;
-              border-radius:22px;
-              padding:26px;
-            "
-          >
-
-            <div class="checkout-field">
-
-              <label for="customerName">
-                Nome completo *
-              </label>
-
-              <input
-                id="customerName"
-                type="text"
-                autocomplete="name"
-                required
-              >
-
-            </div>
-
-
-            <div class="checkout-field">
-
-              <label for="customerEmail">
-                E-mail *
-              </label>
-
-              <input
-                id="customerEmail"
-                type="email"
-                autocomplete="email"
-                required
-              >
-
-            </div>
-
-
-            <div class="checkout-field">
-
-              <label for="customerPhone">
-                Telemóvel *
-              </label>
-
-              <input
-                id="customerPhone"
-                type="tel"
-                autocomplete="tel"
-                required
-              >
-
-            </div>
-
-
-            <div class="checkout-field">
-
-              <label for="customerAddress">
-                Morada de entrega *
-              </label>
-
-              <input
-                id="customerAddress"
-                type="text"
-                autocomplete="street-address"
-                placeholder="Rua, número, andar..."
-                required
-              >
-
-            </div>
-
-
-            <div class="checkout-address-grid">
-
-              <div class="checkout-field">
-
-                <label for="customerPostalCode">
-                  Código Postal *
-                </label>
-
-                <input
-                  id="customerPostalCode"
-                  type="text"
-                  autocomplete="postal-code"
-                  placeholder="0000-000"
-                  pattern="[0-9]{4}-[0-9]{3}"
-                  required
-                >
-
-              </div>
-
-
-              <div class="checkout-field">
-
-                <label for="customerCity">
-                  Localidade *
-                </label>
-
-                <input
-                  id="customerCity"
-                  type="text"
-                  autocomplete="address-level2"
-                  required
-                >
-
-              </div>
-
-            </div>
-
-
-            <div class="checkout-field">
-
-              <label for="customerNif">
-                NIF
-                <span class="optional-field">
-                  (opcional)
-                </span>
-              </label>
-
-              <input
-                id="customerNif"
-                type="text"
-                inputmode="numeric"
-                maxlength="9"
-                placeholder="123456789"
-              >
-
-            </div>
-
-
-            <button
-              class="btn primary checkout-button"
-              id="paymentButton"
-              type="submit">
-              Ir para pagamento →
-            </button>
-
-
-            <p
-              id="checkoutMessage"
-              class="checkout-message">
-            </p>
-
-          </form>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- PAGAMENTO -->
 
       <div
-        id="checkoutArea"
-        style="
-          display:none;
-          margin-top:45px;
-        "
-      >
-
-        <div
-          style="
-            max-width:700px;
-            margin:0 auto;
-          "
-        >
-
-          <p class="eyebrow">
-            PAGAMENTO SEGURO
-          </p>
-
-          <h2
-            style="
-              font-family:'KidspaceWeb','Kidspace',cursive;
-              font-weight:normal;
-              font-size:42px;
-              color:var(--olive);
-              margin:5px 0 18px;
-            "
-          >
-            Finalizar encomenda
-          </h2>
+        id="checkoutMessage"
+        class="checkout-message"
+      ></div>
 
 
-          <div
-            class="order-reference"
-            id="orderReference"
-            style="display:none;">
-          </div>
-
-
-          <div id="easypay-checkout"></div>
-
-        </div>
-
-      </div>
+      <div id="easypayCheckout"></div>
 
     </section>
 
@@ -412,30 +474,11 @@
 
   <footer>
 
-    <img
-      src="images/logo.png"
-      alt="Kitrineta"
-    >
-
     <p>
-      Descobrir ser criança.
+      Kitrineta — Descobrir ser criança
     </p>
 
-    <small>
-      © 2026 Kitrineta ·
-      Política de Privacidade ·
-      Termos e Condições
-    </small>
-
   </footer>
-
-
-
-  <!-- EASYPAY -->
-
-  <script
-    src="https://cdn.easypay.pt/checkout/2.9.1/">
-  </script>
 
 
   <script>
@@ -443,6 +486,12 @@
     const PRODUCT_PRICES = {
       "Kit Explorador": 54.90,
       "Kit Dinossauro": 54.90
+    };
+
+
+    const PRODUCT_IDS = {
+      "Kit Explorador": "kit-explorador",
+      "Kit Dinossauro": "kit-dinossauro"
     };
 
 
@@ -454,44 +503,21 @@
       "https://cute-profiterole-833561.netlify.app/.netlify/functions/create-checkout";
 
 
-    let checkoutInstance = null;
-
-
-
-    function formatPrice(value) {
-
-      return Number(value).toLocaleString(
-        "pt-PT",
-        {
-          style: "currency",
-          currency: "EUR"
-        }
-      );
-
-    }
-
-
-
     function getCart() {
 
       try {
 
         return JSON.parse(
-          localStorage.getItem(
-            "kitrinetaCart"
-          )
+          localStorage.getItem("kitrinetaCart")
         ) || [];
 
-      }
-
-      catch (error) {
+      } catch (error) {
 
         return [];
 
       }
 
     }
-
 
 
     function saveCart(cart) {
@@ -506,71 +532,106 @@
     }
 
 
+    function money(value) {
+
+      return Number(value).toLocaleString(
+        "pt-PT",
+        {
+          style: "currency",
+          currency: "EUR"
+        }
+      );
+
+    }
+
+
+    function getProductPrice(product) {
+
+      return PRODUCT_PRICES[product] || 0;
+
+    }
+
 
     function getProductImage(product) {
 
-      if (
-        product === "Kit Explorador"
-      ) {
-
-        return "images/kitexplorador.png";
-
-      }
-
-
-      if (
-        product === "Kit Dinossauro"
-      ) {
-
+      if (product === "Kit Dinossauro") {
         return "images/kitdinossauro.png";
-
       }
 
-
-      return "images/logo.png";
+      return "images/kitexplorador.png";
 
     }
 
 
+    function updateHeaderCount(cart) {
 
-    function getProductId(product) {
+      const total =
+        cart.reduce(
+          function(sum, item) {
+            return sum + Number(item.quantity || 1);
+          },
+          0
+        );
 
-      if (
-        product === "Kit Explorador"
-      ) {
 
-        return "kit-explorador";
+      const counter =
+        document.getElementById("cartCount");
 
+
+      if (counter) {
+        counter.textContent = total;
       }
-
-
-      if (
-        product === "Kit Dinossauro"
-      ) {
-
-        return "kit-dinossauro";
-
-      }
-
-
-      return null;
 
     }
 
 
+    function changeQuantity(index, amount) {
 
-    function escapeHTML(text) {
+      const cart = getCart();
 
-      const div =
-        document.createElement("div");
+      if (!cart[index]) {
+        return;
+      }
 
-      div.textContent =
-        text;
 
-      return div.innerHTML;
+      let quantity =
+        Number(cart[index].quantity || 1);
+
+
+      quantity += amount;
+
+
+      if (quantity < 1) {
+        quantity = 1;
+      }
+
+
+      if (quantity > 10) {
+        quantity = 10;
+      }
+
+
+      cart[index].quantity =
+        quantity;
+
+
+      saveCart(cart);
 
     }
 
+
+    function removeItem(index) {
+
+      const cart = getCart();
+
+      cart.splice(
+        index,
+        1
+      );
+
+      saveCart(cart);
+
+    }
 
 
     function renderCart() {
@@ -579,66 +640,178 @@
         getCart();
 
 
-      const cartItems =
-        document.getElementById(
-          "cartItems"
-        );
+      const itemsContainer =
+        document.getElementById("cartItems");
 
 
       const emptyCart =
-        document.getElementById(
-          "emptyCart"
-        );
+        document.getElementById("emptyCart");
 
 
-      const cartSummary =
-        document.getElementById(
-          "cartSummary"
-        );
+      const summary =
+        document.getElementById("cartSummary");
 
 
-      const totalQuantity =
-        cart.reduce(
-          function(total, item) {
+      const deliveryBox =
+        document.getElementById("deliveryBox");
 
-            return (
-              total +
-              Number(
-                item.quantity || 1
-              )
-            );
 
-          },
-          0
-        );
+      updateHeaderCount(cart);
+
+
+      if (!cart.length) {
+
+        itemsContainer.innerHTML = "";
+
+        emptyCart.style.display =
+          "block";
+
+        summary.style.display =
+          "none";
+
+        deliveryBox.style.display =
+          "none";
+
+        return;
+
+      }
+
+
+      emptyCart.style.display =
+        "none";
+
+      summary.style.display =
+        "block";
+
+      deliveryBox.style.display =
+        "block";
 
 
       let subtotal = 0;
 
-
-      cart.forEach(
-        function(item) {
-
-          const price =
-            PRODUCT_PRICES[
-              item.product
-            ] || 0;
+      let totalQuantity = 0;
 
 
-          subtotal +=
-            price *
-            Number(
-              item.quantity || 1
-            );
+      itemsContainer.innerHTML =
+        cart.map(
+          function(item, index) {
 
-        }
-      );
+            const quantity =
+              Number(item.quantity || 1);
 
 
-      document.getElementById(
-        "cartCount"
-      ).textContent =
-        totalQuantity;
+            const price =
+              getProductPrice(
+                item.product
+              );
+
+
+            const lineTotal =
+              price * quantity;
+
+
+            subtotal +=
+              lineTotal;
+
+
+            totalQuantity +=
+              quantity;
+
+
+            const childName =
+              item.childName
+                ? `
+                  <p class="cart-child">
+                    Personalização:
+                    <strong>
+                      ${escapeHtml(item.childName)}
+                    </strong>
+                  </p>
+                `
+                : "";
+
+
+            return `
+              <article class="cart-product">
+
+                <div class="cart-product-image">
+
+                  <img
+                    src="${getProductImage(item.product)}"
+                    alt="${escapeHtml(item.product)}"
+                  >
+
+                </div>
+
+
+                <div class="cart-product-info">
+
+                  <span class="tag">
+                    KITRINETA
+                  </span>
+
+                  <h2>
+                    ${escapeHtml(item.product)}
+                  </h2>
+
+                  ${childName}
+
+                  <p class="cart-price">
+                    ${money(price)} cada
+                    ·
+                    ${money(lineTotal)}
+                  </p>
+
+                </div>
+
+
+                <div class="cart-product-actions">
+
+                  <span class="cart-quantity-label">
+                    Quantidade
+                  </span>
+
+
+                  <div class="quantity-selector">
+
+                    <button
+                      type="button"
+                      onclick="changeQuantity(${index}, -1)"
+                      aria-label="Diminuir quantidade"
+                    >
+                      −
+                    </button>
+
+                    <span>
+                      ${quantity}
+                    </span>
+
+                    <button
+                      type="button"
+                      onclick="changeQuantity(${index}, 1)"
+                      aria-label="Aumentar quantidade"
+                    >
+                      +
+                    </button>
+
+                  </div>
+
+
+                  <button
+                    type="button"
+                    class="remove-item"
+                    onclick="removeItem(${index})"
+                  >
+                    Remover
+                  </button>
+
+                </div>
+
+              </article>
+            `;
+
+          }
+        ).join("");
 
 
       document.getElementById(
@@ -650,179 +823,90 @@
       document.getElementById(
         "cartSubtotal"
       ).textContent =
-        formatPrice(
-          subtotal
-        );
+        money(subtotal);
 
 
       document.getElementById(
         "cartTotal"
       ).textContent =
-        formatPrice(
-          subtotal
-        );
+        money(subtotal);
+
+    }
 
 
-      cartItems.innerHTML =
-        "";
+    function escapeHtml(value) {
+
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+    }
 
 
-      if (
-        cart.length === 0
-      ) {
+    function getCustomerData() {
 
-        emptyCart.style.display =
-          "block";
+      return {
 
-        cartSummary.style.display =
-          "none";
+        name:
+          document.getElementById(
+            "customerName"
+          ).value.trim(),
 
-        return;
+        email:
+          document.getElementById(
+            "customerEmail"
+          ).value.trim(),
 
-      }
+        phone:
+          document.getElementById(
+            "customerPhone"
+          ).value.trim(),
 
+        address:
+          document.getElementById(
+            "customerAddress"
+          ).value.trim(),
 
-      emptyCart.style.display =
-        "none";
+        postalCode:
+          document.getElementById(
+            "customerPostalCode"
+          ).value.trim(),
 
-      cartSummary.style.display =
-        "block";
+        city:
+          document.getElementById(
+            "customerCity"
+          ).value.trim(),
 
+        nif:
+          document.getElementById(
+            "customerNif"
+          ).value.trim()
 
+      };
 
-      cart.forEach(
-        function(item, index) {
-
-          const price =
-            PRODUCT_PRICES[
-              item.product
-            ] || 0;
-
-
-          const itemTotal =
-            price *
-            Number(
-              item.quantity || 1
-            );
-
-
-          const product =
-            document.createElement(
-              "article"
-            );
-
-
-          product.className =
-            "cart-product";
+    }
 
 
-          const childText =
-            item.childName
+    function prepareOrderItems(cart) {
 
-            ? `
-              <p class="cart-child">
-                Para:
-                <strong>
-                  ${escapeHTML(
-                    item.childName
-                  )}
-                </strong>
-              </p>
-            `
+      return cart.map(
+        function(item) {
 
-            : "";
+          return {
 
+            id:
+              PRODUCT_IDS[item.product],
 
-          product.innerHTML = `
+            quantity:
+              Number(item.quantity || 1),
 
-            <div class="cart-product-image">
+            childName:
+              item.childName || ""
 
-              <img
-                src="${getProductImage(
-                  item.product
-                )}"
-                alt="${escapeHTML(
-                  item.product
-                )}"
-              >
-
-            </div>
-
-
-            <div class="cart-product-info">
-
-              <p class="tag">
-                KIT EDUCATIVO
-              </p>
-
-              <h2>
-                ${escapeHTML(
-                  item.product
-                )}
-              </h2>
-
-              ${childText}
-
-              <p class="cart-price">
-                ${formatPrice(
-                  price
-                )} cada
-              </p>
-
-              <p class="cart-line-total">
-                ${formatPrice(
-                  itemTotal
-                )}
-              </p>
-
-            </div>
-
-
-            <div class="cart-product-actions">
-
-              <span class="cart-quantity-label">
-                Quantidade
-              </span>
-
-
-              <div class="quantity-selector">
-
-                <button
-                  type="button"
-                  onclick="changeQuantity(${index}, -1)"
-                  aria-label="Diminuir quantidade">
-                  −
-                </button>
-
-                <span>
-                  ${item.quantity}
-                </span>
-
-                <button
-                  type="button"
-                  onclick="changeQuantity(${index}, 1)"
-                  aria-label="Aumentar quantidade">
-                  +
-                </button>
-
-              </div>
-
-
-              <button
-                class="remove-item"
-                type="button"
-                onclick="removeItem(${index})">
-                Remover
-              </button>
-
-            </div>
-
-          `;
-
-
-          cartItems.appendChild(
-            product
-          );
+          };
 
         }
       );
@@ -830,187 +914,28 @@
     }
 
 
-
-    function changeQuantity(
-      index,
-      change
-    ) {
-
-      const cart =
-        getCart();
-
-
-      cart[index].quantity =
-        Number(
-          cart[index].quantity || 1
-        ) +
-        change;
-
-
-      if (
-        cart[index].quantity < 1
-      ) {
-
-        cart[index].quantity =
-          1;
-
-      }
-
-
-      if (
-        cart[index].quantity > 10
-      ) {
-
-        cart[index].quantity =
-          10;
-
-      }
-
-
-      saveCart(
-        cart
-      );
-
-    }
-
-
-
-    function removeItem(index) {
-
-      const cart =
-        getCart();
-
-
-      cart.splice(
-        index,
-        1
-      );
-
-
-      saveCart(
-        cart
-      );
-
-    }
-
-
-
-    function showDeliveryForm() {
-
-      const deliveryArea =
-        document.getElementById(
-          "deliveryArea"
-        );
-
-
-      deliveryArea.style.display =
-        "block";
-
-
-      setTimeout(
-        function() {
-
-          deliveryArea.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-
-        },
-        100
-      );
-
-    }
-
-
-
-    function buildOrderItems(cart) {
-
-      return cart
-        .map(
-          function(item) {
-
-            const id =
-              getProductId(
-                item.product
-              );
-
-
-            if (!id) {
-
-              return null;
-
-            }
-
-
-            return {
-
-              id:
-                id,
-
-              quantity:
-                Number(
-                  item.quantity || 1
-                ),
-
-              childName:
-                String(
-                  item.childName || ""
-                ).trim()
-
-            };
-
-          }
-        )
-        .filter(Boolean);
-
-    }
-
-
-
-    /*
-      CRIAR E GUARDAR A ENCOMENDA
-
-      Agora enviamos:
-      - produtos
-      - quantidades
-      - personalização
-      - dados de entrega
-
-      A função Netlify valida os preços
-      e guarda a encomenda no Blobs.
-    */
-
     async function createOrder(
       cart,
       customer
     ) {
-
-      const items =
-        buildOrderItems(
-          cart
-        );
-
 
       const response =
         await fetch(
           CREATE_ORDER_URL,
           {
 
-            method:
-              "POST",
+            method: "POST",
 
             headers: {
-
               "Content-Type":
                 "application/json"
-
             },
 
             body:
               JSON.stringify({
 
                 items:
-                  items,
+                  prepareOrderItems(cart),
 
                 customer:
                   customer
@@ -1021,23 +946,8 @@
         );
 
 
-      let result;
-
-
-      try {
-
-        result =
-          await response.json();
-
-      }
-
-      catch (error) {
-
-        throw new Error(
-          "O servidor devolveu uma resposta inválida."
-        );
-
-      }
+      const result =
+        await response.json();
 
 
       if (
@@ -1059,69 +969,59 @@
     }
 
 
-
     async function createEasypayCheckout(
       order
     ) {
 
       /*
-        Por enquanto o checkout Easypay
-        está preparado para o Kit Explorador.
-
-        Vamos alargar ao Dinossauro
-        numa etapa seguinte.
+        NESTA FASE O PAGAMENTO
+        ESTÁ PREPARADO APENAS
+        PARA O KIT EXPLORADOR.
       */
 
-      const explorer =
-        order.items.find(
-          function(item) {
-
-            return (
-              item.id ===
-              "kit-explorador"
-            );
-
-          }
-        );
-
-
-      if (!explorer) {
-
-        throw new Error(
-          "Neste teste o pagamento está preparado para o Kit Explorador."
-        );
-
-      }
-
-
       if (
-        order.items.length !== 1
+        !order.items ||
+        order.items.length !== 1 ||
+        order.items[0].id !==
+          "kit-explorador"
       ) {
 
         throw new Error(
-          "Neste teste adiciona apenas o Kit Explorador ao carrinho."
+          "O pagamento online do Kit Dinossauro ainda está a ser preparado."
         );
 
       }
 
+
+      const explorer =
+        order.items[0];
+
+
+      /*
+        A ALTERAÇÃO IMPORTANTE:
+
+        Enviamos agora para a Easypay
+        a MESMA referência KIT-...
+        criada pelo create-order.
+      */
 
       const response =
         await fetch(
           CREATE_CHECKOUT_URL,
           {
 
-            method:
-              "POST",
+            method: "POST",
 
             headers: {
-
               "Content-Type":
                 "application/json"
-
             },
 
             body:
               JSON.stringify({
+
+                orderId:
+                  order.id,
 
                 quantity:
                   explorer.quantity
@@ -1132,23 +1032,8 @@
         );
 
 
-      let result;
-
-
-      try {
-
-        result =
-          await response.json();
-
-      }
-
-      catch (error) {
-
-        throw new Error(
-          "A Easypay devolveu uma resposta inválida."
-        );
-
-      }
+      const result =
+        await response.json();
 
 
       if (
@@ -1158,7 +1043,7 @@
       ) {
 
         throw new Error(
-          "Não foi possível criar o pagamento."
+          "Não foi possível iniciar o pagamento."
         );
 
       }
@@ -1169,498 +1054,292 @@
     }
 
 
+    function showOrderReference(
+      order
+    ) {
 
-    async function startCheckout(event) {
-
-      event.preventDefault();
-
-
-      const form =
-        document.getElementById(
-          "deliveryForm"
-        );
-
-
-      if (
-        !form.checkValidity()
-      ) {
-
-        form.reportValidity();
-
-        return;
-
-      }
-
-
-      const cart =
-        getCart();
-
-
-      if (
-        cart.length === 0
-      ) {
-
-        return;
-
-      }
-
-
-      const button =
-        document.getElementById(
-          "paymentButton"
-        );
-
-
-      const message =
-        document.getElementById(
-          "checkoutMessage"
-        );
-
-
-      const checkoutArea =
-        document.getElementById(
-          "checkoutArea"
-        );
-
-
-      const orderReference =
+      const box =
         document.getElementById(
           "orderReference"
         );
 
 
-      /*
-        DADOS DE ENTREGA
-      */
-
-      const customer = {
-
-        name:
-          document
-            .getElementById(
-              "customerName"
-            )
-            .value
-            .trim(),
-
-        email:
-          document
-            .getElementById(
-              "customerEmail"
-            )
-            .value
-            .trim(),
-
-        phone:
-          document
-            .getElementById(
-              "customerPhone"
-            )
-            .value
-            .trim(),
-
-        address:
-          document
-            .getElementById(
-              "customerAddress"
-            )
-            .value
-            .trim(),
-
-        postalCode:
-          document
-            .getElementById(
-              "customerPostalCode"
-            )
-            .value
-            .trim(),
-
-        city:
-          document
-            .getElementById(
-              "customerCity"
-            )
-            .value
-            .trim(),
-
-        nif:
-          document
-            .getElementById(
-              "customerNif"
-            )
-            .value
-            .trim()
-
-      };
+      box.textContent =
+        "Encomenda " +
+        order.id +
+        " · " +
+        money(order.total) +
+        " · Portes grátis";
 
 
-      /*
-        Mantemos também temporariamente
-        os dados nesta sessão para podermos
-        criar posteriormente uma página
-        de confirmação.
-      */
-
-      sessionStorage.setItem(
-        "kitrinetaCustomer",
-        JSON.stringify(
-          customer
-        )
+      box.classList.add(
+        "show"
       );
 
-
-      button.disabled =
-        true;
+    }
 
 
-      button.textContent =
-        "A criar encomenda...";
+    function showMessage(
+      message,
+      isError
+    ) {
 
-
-      message.style.display =
-        "block";
-
-
-      message.textContent =
-        "A validar e guardar a tua encomenda...";
-
-
-      try {
-
-        /*
-          1.
-          ENVIAR PRODUTOS + ENTREGA
-          PARA O SERVIDOR.
-        */
-
-        const order =
-          await createOrder(
-            cart,
-            customer
-          );
-
-
-        sessionStorage.setItem(
-          "kitrinetaOrder",
-          JSON.stringify(
-            order
-          )
+      const element =
+        document.getElementById(
+          "checkoutMessage"
         );
 
 
-        console.log(
-          "Encomenda criada:",
-          order
+      element.textContent =
+        message;
+
+
+      element.style.color =
+        isError
+          ? "#b84c3d"
+          : "var(--olive)";
+
+    }
+
+
+    function startEasypay(
+      manifest
+    ) {
+
+      if (
+        typeof EasypayCheckout ===
+        "undefined"
+      ) {
+
+        throw new Error(
+          "Não foi possível carregar o checkout Easypay."
         );
 
-
-        message.textContent =
-          "Encomenda criada. A preparar o pagamento...";
+      }
 
 
-        /*
-          2.
-          SÓ DEPOIS ABRIMOS
-          O PAGAMENTO EASYPAY.
-        */
-
-        const manifest =
-          await createEasypayCheckout(
-            order
-          );
+      document.getElementById(
+        "easypayCheckout"
+      ).innerHTML = "";
 
 
-        if (
-          checkoutInstance &&
-          typeof checkoutInstance.unmount
-            === "function"
-        ) {
+      EasypayCheckout.startCheckout(
+        manifest,
+        {
+          id:
+            "easypayCheckout",
 
-          checkoutInstance.unmount();
+          testing:
+            true,
 
-        }
+          onSuccess:
+            function() {
 
+              /*
+                IMPORTANTE:
 
-        checkoutArea.style.display =
-          "block";
+                Isto NÃO significa que
+                vamos marcar a encomenda
+                como paga.
 
+                A confirmação real será
+                feita pelo webhook
+                da Easypay.
+              */
 
-        orderReference.style.display =
-          "block";
+              showMessage(
+                "Pagamento submetido. A confirmação será processada automaticamente.",
+                false
+              );
 
+            },
 
-        orderReference.innerHTML =
-          "Encomenda <strong>" +
-          escapeHTML(
-            order.id
-          ) +
-          "</strong> · " +
-          formatPrice(
-            order.total
-          ) +
-          " · Portes grátis";
+          onError:
+            function() {
 
+              showMessage(
+                "Não foi possível concluir o pagamento. Podes tentar novamente.",
+                true
+              );
 
-        message.style.display =
-          "none";
+            },
 
+          onClose:
+            function() {
 
-        checkoutInstance =
-          easypayCheckout.startCheckout(
-            manifest,
-            {
-
-              id:
-                "easypay-checkout",
-
-              display:
-                "inline",
-
-              testing:
-                true,
-
-              language:
-                "pt_PT",
-
-              showLoading:
-                true,
-
-
-              onSuccess:
-                function(checkoutInfo) {
-
-                  console.log(
-                    "Easypay:",
-                    checkoutInfo
-                  );
-
-
-                  /*
-                    IMPORTANTE:
-
-                    Este sucesso no navegador
-                    ainda NÃO será usado como
-                    confirmação definitiva
-                    de pagamento.
-
-                    Mais tarde o webhook
-                    da Easypay atualizará
-                    a encomenda para "paid".
-                  */
-
-                  message.style.display =
-                    "block";
-
-
-                  message.textContent =
-                    "✅ Pagamento de teste processado. A confirmação definitiva será feita pelo sistema de pagamentos.";
-
-                },
-
-
-              onPaymentError:
-                function(error) {
-
-                  console.error(
-                    "Erro de pagamento:",
-                    error
-                  );
-
-
-                  message.style.display =
-                    "block";
-
-
-                  message.textContent =
-                    "Não foi possível concluir o pagamento. Podes tentar novamente.";
-
-                },
-
-
-              onError:
-                function(error) {
-
-                  console.error(
-                    "Erro Easypay:",
-                    error
-                  );
-
-
-                  message.style.display =
-                    "block";
-
-
-                  message.textContent =
-                    "O checkout encontrou um erro. Tenta novamente.";
-
-                }
+              showMessage(
+                "O checkout foi fechado. A encomenda continua pendente.",
+                false
+              );
 
             }
-          );
-
-
-        setTimeout(
-          function() {
-
-            checkoutArea.scrollIntoView({
-              behavior: "smooth",
-              block: "start"
-            });
-
-          },
-          250
-        );
-
-      }
-
-      catch (error) {
-
-        console.error(
-          "Erro checkout:",
-          error
-        );
-
-
-        message.style.display =
-          "block";
-
-
-        message.textContent =
-          "❌ " +
-          (
-            error.message ||
-            "Não foi possível continuar."
-          );
-
-      }
-
-
-      button.disabled =
-        false;
-
-
-      button.textContent =
-        "Ir para pagamento →";
+        }
+      );
 
     }
 
 
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
 
-    document
-      .getElementById(
-        "checkoutButton"
-      )
-      .addEventListener(
-        "click",
-        showDeliveryForm
-      );
+        renderCart();
 
 
-    document
-      .getElementById(
-        "deliveryForm"
-      )
-      .addEventListener(
-        "submit",
-        startCheckout
-      );
+        const form =
+          document.getElementById(
+            "deliveryForm"
+          );
 
 
-    renderCart();
+        form.addEventListener(
+          "submit",
+          async function(event) {
+
+            event.preventDefault();
+
+
+            if (
+              !form.checkValidity()
+            ) {
+
+              form.reportValidity();
+
+              return;
+
+            }
+
+
+            const cart =
+              getCart();
+
+
+            if (!cart.length) {
+
+              showMessage(
+                "O carrinho está vazio.",
+                true
+              );
+
+              return;
+
+            }
+
+
+            const button =
+              document.getElementById(
+                "checkoutButton"
+              );
+
+
+            button.disabled =
+              true;
+
+
+            button.textContent =
+              "A preparar pagamento...";
+
+
+            showMessage(
+              "",
+              false
+            );
+
+
+            try {
+
+              const customer =
+                getCustomerData();
+
+
+              /*
+                1 — CRIAR E GUARDAR
+                A ENCOMENDA
+              */
+
+              const order =
+                await createOrder(
+                  cart,
+                  customer
+                );
+
+
+              sessionStorage.setItem(
+                "kitrinetaCustomer",
+                JSON.stringify(customer)
+              );
+
+
+              sessionStorage.setItem(
+                "kitrinetaOrder",
+                JSON.stringify(order)
+              );
+
+
+              showOrderReference(
+                order
+              );
+
+
+              /*
+                2 — CRIAR CHECKOUT
+                USANDO A MESMA
+                REFERÊNCIA KIT-...
+              */
+
+              const manifest =
+                await createEasypayCheckout(
+                  order
+                );
+
+
+              /*
+                3 — ABRIR EASYPAY
+              */
+
+              startEasypay(
+                manifest
+              );
+
+
+              showMessage(
+                "Encomenda criada. Escolhe agora o método de pagamento.",
+                false
+              );
+
+
+            } catch (error) {
+
+              console.error(
+                error
+              );
+
+
+              showMessage(
+                error.message ||
+                "Não foi possível continuar para o pagamento.",
+                true
+              );
+
+
+            } finally {
+
+              button.disabled =
+                false;
+
+
+              button.textContent =
+                "Ir para pagamento";
+
+            }
+
+          }
+        );
+
+      }
+    );
 
   </script>
-
-
-
-  <style>
-
-    .checkout-field {
-      margin-bottom:16px;
-    }
-
-
-    .checkout-field label {
-      display:block;
-      margin-bottom:7px;
-      color:var(--olive);
-      font-size:12px;
-      font-weight:900;
-    }
-
-
-    .checkout-field input {
-      width:100%;
-      box-sizing:border-box;
-      height:48px;
-      padding:0 14px;
-      border:1.5px solid #ddd8cf;
-      border-radius:10px;
-      background:#fff;
-      color:var(--ink);
-      font-family:Nunito,Arial,sans-serif;
-      font-size:14px;
-      outline:none;
-    }
-
-
-    .checkout-field input:focus {
-      border-color:var(--blue);
-
-      box-shadow:
-        0 0 0 3px
-        rgba(89,183,200,.12);
-    }
-
-
-    .checkout-address-grid {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-
-
-    .optional-field {
-      font-weight:600;
-      color:var(--muted);
-    }
-
-
-    #paymentButton {
-      width:100%;
-      border:0;
-      margin-top:8px;
-    }
-
-
-    .checkout-message {
-      display:none;
-      margin:14px 0 0;
-      font-size:12px;
-      line-height:1.5;
-      color:var(--muted);
-    }
-
-
-    .order-reference {
-      margin-bottom:18px;
-      padding:13px 16px;
-      background:var(--blue2);
-      border-radius:12px;
-      color:var(--olive);
-      font-size:12px;
-    }
-
-
-    @media(max-width:600px) {
-
-      .checkout-address-grid {
-        grid-template-columns:1fr;
-        gap:0;
-      }
-
-    }
-
-  </style>
 
 </body>
 </html>
