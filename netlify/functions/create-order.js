@@ -1,16 +1,7 @@
-const { getStore } = require("@netlify/blobs");
-
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "Content-Type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Content-Type": "application/json"
-};
+import { getStore } from "@netlify/blobs";
 
 
 const PRODUCTS = {
-
   "kit-explorador": {
     name: "Kit Explorador",
     price: 54.90
@@ -20,42 +11,77 @@ const PRODUCTS = {
     name: "Kit Dinossauro",
     price: 54.90
   }
-
 };
 
 
-exports.handler = async function (event) {
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS"
+};
 
-  if (event.httpMethod === "OPTIONS") {
 
-    return {
-      statusCode: 204,
-      headers: corsHeaders,
-      body: ""
-    };
+function jsonResponse(data, status = 200) {
+
+  return new Response(
+    JSON.stringify(data),
+    {
+      status: status,
+
+      headers: {
+        ...corsHeaders,
+        "Content-Type": "application/json"
+      }
+    }
+  );
+
+}
+
+
+export default async (request, context) => {
+
+  /*
+    CORS
+  */
+
+  if (request.method === "OPTIONS") {
+
+    return new Response(
+      null,
+      {
+        status: 204,
+        headers: corsHeaders
+      }
+    );
 
   }
 
 
-  if (event.httpMethod !== "POST") {
+  /*
+    SÓ ACEITAMOS POST
+  */
 
-    return {
-      statusCode: 405,
-      headers: corsHeaders,
+  if (request.method !== "POST") {
 
-      body: JSON.stringify({
+    return jsonResponse(
+      {
         success: false,
         message: "Método não permitido."
-      })
-    };
+      },
+      405
+    );
 
   }
 
 
   try {
 
+    /*
+      RECEBER DADOS DO CARRINHO
+    */
+
     const data =
-      JSON.parse(event.body || "{}");
+      await request.json();
 
 
     const items =
@@ -67,30 +93,30 @@ exports.handler = async function (event) {
     const customer =
       data.customer &&
       typeof data.customer === "object"
-
         ? data.customer
-
         : {};
 
 
+    /*
+      VERIFICAR PRODUTOS
+    */
+
     if (items.length === 0) {
 
-      return {
-        statusCode: 400,
-        headers: corsHeaders,
-
-        body: JSON.stringify({
+      return jsonResponse(
+        {
           success: false,
           message:
             "A encomenda não tem produtos."
-        })
-      };
+        },
+        400
+      );
 
     }
 
 
     /*
-      VALIDAR DADOS DE ENTREGA
+      LIMPAR DADOS DE ENTREGA
     */
 
     const cleanCustomer = {
@@ -133,6 +159,10 @@ exports.handler = async function (event) {
     };
 
 
+    /*
+      CAMPOS OBRIGATÓRIOS
+    */
+
     if (
       !cleanCustomer.name ||
       !cleanCustomer.email ||
@@ -142,22 +172,21 @@ exports.handler = async function (event) {
       !cleanCustomer.city
     ) {
 
-      return {
-        statusCode: 400,
-        headers: corsHeaders,
-
-        body: JSON.stringify({
+      return jsonResponse(
+        {
           success: false,
           message:
             "Faltam dados de entrega."
-        })
-      };
+        },
+        400
+      );
 
     }
 
 
     /*
-      VALIDAR PRODUTOS E PREÇOS
+      VALIDAR PRODUTOS E CALCULAR
+      O PREÇO NO SERVIDOR
     */
 
     let total = 0;
@@ -173,16 +202,14 @@ exports.handler = async function (event) {
 
       if (!product) {
 
-        return {
-          statusCode: 400,
-          headers: corsHeaders,
-
-          body: JSON.stringify({
+        return jsonResponse(
+          {
             success: false,
             message:
               "Produto inválido."
-          })
-        };
+          },
+          400
+        );
 
       }
 
@@ -244,12 +271,16 @@ exports.handler = async function (event) {
 
 
     /*
-      CRIAR REFERÊNCIA
+      CRIAR REFERÊNCIA ÚNICA
     */
 
     const orderId =
       "KIT-" +
-      Date.now();
+      Date.now() +
+      "-" +
+      crypto.randomUUID()
+        .slice(0, 8)
+        .toUpperCase();
 
 
     const createdAt =
@@ -257,7 +288,7 @@ exports.handler = async function (event) {
 
 
     /*
-      ENCOMENDA COMPLETA
+      ENCOMENDA
     */
 
     const order = {
@@ -296,37 +327,45 @@ exports.handler = async function (event) {
 
 
     /*
-      GUARDAR NO NETLIFY BLOBS
+      NETLIFY BLOBS
 
-      Este armazenamento é permanente
-      entre deploys.
+      Dentro da Netlify Function,
+      o runtime fornece o contexto
+      necessário ao armazenamento.
     */
 
     const orders =
-      getStore("kitrineta-orders");
+      getStore(
+        "kitrineta-orders"
+      );
 
+
+    /*
+      GUARDAR ENCOMENDA
+    */
 
     await orders.setJSON(
       orderId,
-      order,
-      {
-        onlyIfNew: true
-      }
+      order
+    );
+
+
+    console.log(
+      "Encomenda guardada:",
+      orderId
     );
 
 
     /*
-      RESPOSTA PARA O SITE
+      DEVOLVEMOS AO SITE APENAS
+      OS DADOS NECESSÁRIOS.
 
-      Não devolvemos novamente a morada
-      nem os restantes dados pessoais.
+      NÃO DEVOLVEMOS A MORADA,
+      TELEFONE, ETC.
     */
 
-    return {
-      statusCode: 200,
-      headers: corsHeaders,
-
-      body: JSON.stringify({
+    return jsonResponse(
+      {
 
         success: true,
 
@@ -355,8 +394,9 @@ exports.handler = async function (event) {
 
         }
 
-      })
-    };
+      },
+      200
+    );
 
 
   }
@@ -369,16 +409,14 @@ exports.handler = async function (event) {
     );
 
 
-    return {
-      statusCode: 500,
-      headers: corsHeaders,
-
-      body: JSON.stringify({
+    return jsonResponse(
+      {
         success: false,
         message:
           "Não foi possível criar a encomenda."
-      })
-    };
+      },
+      500
+    );
 
   }
 
