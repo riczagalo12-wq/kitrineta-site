@@ -8,22 +8,16 @@ const corsHeaders = {
 
 exports.handler = async function (event) {
 
-  // O browser envia primeiro este pedido
-  // para confirmar se pode comunicar com a Netlify.
   if (event.httpMethod === "OPTIONS") {
-
     return {
       statusCode: 204,
       headers: corsHeaders,
       body: ""
     };
-
   }
 
 
-  // O checkout propriamente dito é POST.
   if (event.httpMethod !== "POST") {
-
     return {
       statusCode: 405,
       headers: corsHeaders,
@@ -32,7 +26,6 @@ exports.handler = async function (event) {
         message: "Método não permitido."
       })
     };
-
   }
 
 
@@ -40,6 +33,17 @@ exports.handler = async function (event) {
 
     const data =
       JSON.parse(event.body || "{}");
+
+
+    /*
+      RECEBEMOS A REFERÊNCIA DA ENCOMENDA
+      QUE JÁ FOI CRIADA NO CREATE-ORDER
+    */
+
+    const orderId =
+      String(
+        data.orderId || ""
+      ).trim();
 
 
     const quantity =
@@ -52,17 +56,50 @@ exports.handler = async function (event) {
       );
 
 
+    if (!orderId) {
+
+      return {
+        statusCode: 400,
+        headers: corsHeaders,
+
+        body: JSON.stringify({
+          success: false,
+          message:
+            "Falta a referência da encomenda."
+        })
+      };
+
+    }
+
+
+    /*
+      PREÇO DO KIT EXPLORADOR
+
+      Ainda estamos no ambiente de testes.
+      Mais à frente esta função vai ler
+      diretamente a encomenda guardada.
+    */
+
     const PRICE = 54.90;
 
 
     const total =
       Number(
-        (PRICE * quantity).toFixed(2)
+        (
+          PRICE *
+          quantity
+        ).toFixed(2)
       );
 
 
-    // Credenciais públicas do
-    // ambiente de TESTE Easypay.
+    /*
+      CREDENCIAIS PÚBLICAS
+      DO AMBIENTE SANDBOX EASYPAY
+
+      NÃO SÃO AS CREDENCIAIS REAIS
+      DA KITRINETA.
+    */
+
     const TEST_ACCOUNT_ID =
       "2b0f63e2-9fb5-4e52-aca0-b4bf0339bbe6";
 
@@ -71,9 +108,14 @@ exports.handler = async function (event) {
       "eae4aa59-8e5b-4ec2-887d-b02768481a92";
 
 
-    const orderKey =
-      "kitrineta-" + Date.now();
+    /*
+      CRIAR CHECKOUT EASYPAY
 
+      IMPORTANTE:
+      A key da Easypay passa agora
+      a ser a referência KIT-...
+      da nossa encomenda.
+    */
 
     const response =
       await fetch(
@@ -111,12 +153,15 @@ exports.handler = async function (event) {
                 "mbw"
               ],
 
-              type: "sale",
+              type:
+                "sale",
 
-              currency: "EUR",
+              currency:
+                "EUR",
 
               capture: {
-                descriptive: "Kitrineta"
+                descriptive:
+                  "Kitrineta"
               }
 
             },
@@ -125,9 +170,7 @@ exports.handler = async function (event) {
             order: {
 
               items: [
-
                 {
-
                   description:
                     "Kit Explorador",
 
@@ -139,14 +182,23 @@ exports.handler = async function (event) {
 
                   value:
                     PRICE
-
                 }
-
               ],
 
 
+              /*
+                ESTA É A ALTERAÇÃO
+                MAIS IMPORTANTE.
+
+                Antes:
+                kitrineta-179...
+
+                Agora:
+                KIT-179...-XXXXXXXX
+              */
+
               key:
-                orderKey,
+                orderId,
 
 
               value:
@@ -170,20 +222,31 @@ exports.handler = async function (event) {
     try {
 
       result =
-        JSON.parse(responseText);
+        JSON.parse(
+          responseText
+        );
 
-    }
-
-    catch {
+    } catch {
 
       result = {
-        raw: responseText
+        raw:
+          responseText
       };
 
     }
 
 
+    /*
+      ERRO DEVOLVIDO PELA EASYPAY
+    */
+
     if (!response.ok) {
+
+      console.error(
+        "Erro Easypay:",
+        result
+      );
+
 
       return {
 
@@ -196,7 +259,8 @@ exports.handler = async function (event) {
         body:
           JSON.stringify({
 
-            success: false,
+            success:
+              false,
 
             easypayStatus:
               response.status,
@@ -211,6 +275,16 @@ exports.handler = async function (event) {
     }
 
 
+    /*
+      CHECKOUT CRIADO
+    */
+
+    console.log(
+      "Checkout criado para:",
+      orderId
+    );
+
+
     return {
 
       statusCode: 200,
@@ -221,7 +295,11 @@ exports.handler = async function (event) {
       body:
         JSON.stringify({
 
-          success: true,
+          success:
+            true,
+
+          orderId:
+            orderId,
 
           manifest:
             result
@@ -231,9 +309,13 @@ exports.handler = async function (event) {
     };
 
 
-  }
+  } catch (error) {
 
-  catch (error) {
+    console.error(
+      "Erro create-checkout:",
+      error
+    );
+
 
     return {
 
@@ -245,13 +327,11 @@ exports.handler = async function (event) {
       body:
         JSON.stringify({
 
-          success: false,
+          success:
+            false,
 
           message:
-            "Erro ao criar checkout de teste.",
-
-          error:
-            error.message
+            "Erro ao criar checkout de teste."
 
         })
 
