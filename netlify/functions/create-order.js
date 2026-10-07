@@ -1,3 +1,6 @@
+const { getStore } = require("@netlify/blobs");
+
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "Content-Type",
@@ -7,6 +10,7 @@ const corsHeaders = {
 
 
 const PRODUCTS = {
+
   "kit-explorador": {
     name: "Kit Explorador",
     price: 54.90
@@ -16,30 +20,35 @@ const PRODUCTS = {
     name: "Kit Dinossauro",
     price: 54.90
   }
+
 };
 
 
 exports.handler = async function (event) {
 
-  // Permitir comunicação do site com a função
   if (event.httpMethod === "OPTIONS") {
+
     return {
       statusCode: 204,
       headers: corsHeaders,
       body: ""
     };
+
   }
 
 
   if (event.httpMethod !== "POST") {
+
     return {
       statusCode: 405,
       headers: corsHeaders,
+
       body: JSON.stringify({
         success: false,
         message: "Método não permitido."
       })
     };
+
   }
 
 
@@ -55,17 +64,101 @@ exports.handler = async function (event) {
         : [];
 
 
+    const customer =
+      data.customer &&
+      typeof data.customer === "object"
+
+        ? data.customer
+
+        : {};
+
+
     if (items.length === 0) {
+
       return {
         statusCode: 400,
         headers: corsHeaders,
+
         body: JSON.stringify({
           success: false,
-          message: "A encomenda não tem produtos."
+          message:
+            "A encomenda não tem produtos."
         })
       };
+
     }
 
+
+    /*
+      VALIDAR DADOS DE ENTREGA
+    */
+
+    const cleanCustomer = {
+
+      name:
+        String(
+          customer.name || ""
+        ).trim(),
+
+      email:
+        String(
+          customer.email || ""
+        ).trim(),
+
+      phone:
+        String(
+          customer.phone || ""
+        ).trim(),
+
+      address:
+        String(
+          customer.address || ""
+        ).trim(),
+
+      postalCode:
+        String(
+          customer.postalCode || ""
+        ).trim(),
+
+      city:
+        String(
+          customer.city || ""
+        ).trim(),
+
+      nif:
+        String(
+          customer.nif || ""
+        ).trim()
+
+    };
+
+
+    if (
+      !cleanCustomer.name ||
+      !cleanCustomer.email ||
+      !cleanCustomer.phone ||
+      !cleanCustomer.address ||
+      !cleanCustomer.postalCode ||
+      !cleanCustomer.city
+    ) {
+
+      return {
+        statusCode: 400,
+        headers: corsHeaders,
+
+        body: JSON.stringify({
+          success: false,
+          message:
+            "Faltam dados de entrega."
+        })
+      };
+
+    }
+
+
+    /*
+      VALIDAR PRODUTOS E PREÇOS
+    */
 
     let total = 0;
 
@@ -79,14 +172,18 @@ exports.handler = async function (event) {
 
 
       if (!product) {
+
         return {
           statusCode: 400,
           headers: corsHeaders,
+
           body: JSON.stringify({
             success: false,
-            message: "Produto inválido."
+            message:
+              "Produto inválido."
           })
         };
+
       }
 
 
@@ -114,15 +211,27 @@ exports.handler = async function (event) {
 
 
       validatedItems.push({
-        id: item.id,
-        name: product.name,
-        price: product.price,
-        quantity: quantity,
+
+        id:
+          item.id,
+
+        name:
+          product.name,
+
+        price:
+          product.price,
+
+        quantity:
+          quantity,
+
         childName:
           String(
             item.childName || ""
           ).trim(),
-        total: lineTotal
+
+        total:
+          lineTotal
+
       });
 
     }
@@ -134,22 +243,84 @@ exports.handler = async function (event) {
       );
 
 
+    /*
+      CRIAR REFERÊNCIA
+    */
+
     const orderId =
       "KIT-" +
       Date.now();
 
 
+    const createdAt =
+      new Date().toISOString();
+
+
     /*
-      IMPORTANTE:
-
-      Ainda NÃO estamos a guardar
-      esta encomenda numa base de dados.
-
-      Primeiro vamos confirmar que
-      recebemos e validamos corretamente
-      os dados do carrinho.
+      ENCOMENDA COMPLETA
     */
 
+    const order = {
+
+      id:
+        orderId,
+
+      createdAt:
+        createdAt,
+
+      status:
+        "pending",
+
+      paymentStatus:
+        "pending",
+
+      items:
+        validatedItems,
+
+      customer:
+        cleanCustomer,
+
+      shipping: {
+        price: 0,
+        method:
+          "Portes gratuitos"
+      },
+
+      subtotal:
+        total,
+
+      total:
+        total
+
+    };
+
+
+    /*
+      GUARDAR NO NETLIFY BLOBS
+
+      Este armazenamento é permanente
+      entre deploys.
+    */
+
+    const orders =
+      getStore("kitrineta-orders");
+
+
+    await orders.setJSON(
+      orderId,
+      order,
+      {
+        onlyIfNew: true
+      }
+    );
+
+
+    /*
+      RESPOSTA PARA O SITE
+
+      Não devolvemos novamente a morada
+      nem os restantes dados pessoais.
+    */
 
     return {
       statusCode: 200,
@@ -160,11 +331,28 @@ exports.handler = async function (event) {
         success: true,
 
         order: {
-          id: orderId,
-          items: validatedItems,
-          shipping: 0,
-          total: total,
-          status: "pending"
+
+          id:
+            order.id,
+
+          createdAt:
+            order.createdAt,
+
+          status:
+            order.status,
+
+          items:
+            order.items,
+
+          shipping:
+            order.shipping.price,
+
+          subtotal:
+            order.subtotal,
+
+          total:
+            order.total
+
         }
 
       })
@@ -174,6 +362,12 @@ exports.handler = async function (event) {
   }
 
   catch (error) {
+
+    console.error(
+      "Erro create-order:",
+      error
+    );
+
 
     return {
       statusCode: 500,
